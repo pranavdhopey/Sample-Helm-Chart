@@ -19,7 +19,8 @@ spec:
     blueGreen: 
       activeService: {{ include "argoapp.fullname" . }}
       previewService: {{ include "argoapp.fullname" . }}-preview
-      autoPromotionEnabled: {{ .Values.Rollout.autoPromotionEnabled }}      
+      autoPromotionEnabled: {{ .Values.Rollout.autoPromotionEnabled }}     
+      scaleDownDelaySeconds: {{ .Values.Rollout.scaleDownDelaySeconds }}      
   template:
     metadata:
       {{- with .Values.podAnnotations }}
