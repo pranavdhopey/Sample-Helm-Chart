@@ -18,7 +18,7 @@ previewservice:
     cloud.google.com/backend-config: '{"default": "argo-apps-backendconfig"}'
     cloud.google.com/neg: '{"ingress": true}'
 
-replicaCount: 1
+replicaCount: 3
 
 image:
   repository: argoproj/rollouts-demo
