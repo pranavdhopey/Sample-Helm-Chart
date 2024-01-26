@@ -16,16 +16,16 @@ spec:
     spec:
       project: default
       sources:
-        - repoURL: 'https://gitlab.com/pranav-group/kubernetes-manifest.git'
+        - repoURL: 'https://github.com/pranavdhopey/Sample-Helm-Chart.git'
           targetRevision: main
-          path: Argo-Apps-Helm-RollOut/argoapp
+          path: argoapp/
           helm:
             releaseName: argoapp
             valueFiles:
             - values.yaml
       destination:
         server: '{{url}}'
-        namespace: pranav
+        namespace: pranav-app
       syncPolicy:
         syncOptions:
           - CreateNamespace=true
