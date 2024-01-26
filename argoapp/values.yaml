@@ -3,9 +3,9 @@
 # Declare variables to be passed into your templates.
 
 Deployment:
-  enabled: true
-Rollout:
   enabled: false
+Rollout:
+  enabled: true
   # activeService: {{ .Values.RolloutEnabled.activeService }}
   # previewService: {{ .Values.RolloutEnabled.previewService }}
   autoPromotionEnabled: false
