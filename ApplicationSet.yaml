@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: argocd-app
+  namespace: pranav
+spec:
+  generators:
+  - list:
+      elements:
+      - cluster: test
+        url: https://kubernetes.default.svc
+    
+  template:
+    metadata:
+      name: '{{cluster}}-argoapp'
+    spec:
+      project: default
+      sources:
+        - repoURL: 'https://gitlab.com/pranav-group/kubernetes-manifest.git'
+          targetRevision: main
+          path: Argo-Apps-Helm-RollOut/argoapp
+          helm:
+            releaseName: argoapp
+            valueFiles:
+            - values.yaml
+      destination:
+        server: '{{url}}'
+        namespace: pranav
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+        # automated: 
+        #    prune: true 
+        #    selfHeal: true 
+    
