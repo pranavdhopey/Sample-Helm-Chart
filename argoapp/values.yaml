@@ -18,13 +18,13 @@ previewservice:
     cloud.google.com/backend-config: '{"default": "argo-apps-backendconfig"}'
     cloud.google.com/neg: '{"ingress": true}'
 
-replicaCount: 3
+replicaCount: 1
 
 image:
   repository: argoproj/rollouts-demo
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "yellow"
+  tag: "green"
 
 imagePullSecrets: []
 nameOverride: ""
