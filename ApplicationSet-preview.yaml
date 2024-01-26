@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: argocd-app
+  name: argocd-app-preview
   namespace: pranav
 spec:
   generators:
@@ -12,22 +12,15 @@ spec:
     
   template:
     metadata:
-      name: '{{cluster}}-argoapp'
+      name: '{{cluster}}-argoapp-preview'
     spec:
       project: default
       sources:
         - repoURL: 'https://github.com/pranavdhopey/Sample-Helm-Chart.git'
           targetRevision: main
-          path: argoapp/
+          path: ingress-preview/
           helm:
-            releaseName: argoapp
-            valueFiles:
-            - values.yaml
-        - repoURL: 'https://github.com/pranavdhopey/Sample-Helm-Chart.git'
-          targetRevision: main
-          path: ingress/
-          helm:
-            releaseName: argoapp
+            releaseName: argoapp-preview
             valueFiles:
             - values.yaml    
       destination:

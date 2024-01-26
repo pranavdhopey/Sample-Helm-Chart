@@ -1,12 +1,12 @@
 managedCertificateEnabled: false
 managedCertificates:
-  - name: argoapp-certificate
+  - name: argoapp-preview-certificate
     domains: 
-    - argoapp.goinit.net
+    - argoapp-preview.goinit.net
 
 frontendConfigEnabled: false
 frontendConfig:
-  name: argoapp-frontend-config
+  name: argoapp-preview-frontend-config
   redirectToHttps:
     enabled: true
     responseCodeName: MOVED_PERMANENTLY_DEFAULT
@@ -18,18 +18,18 @@ ingress:
   annotations: 
     kubernetes.io/ingress.class: gce
     kubernetes.io/ingress.allow-http: "true"
-    # networking.gke.io/managed-certificates: "argoapp-certificate" 
-    # networking.gke.io/v1beta1.FrontendConfig: argoapp-frontend-config"
+    # networking.gke.io/managed-certificates: "argoapp-preview-certificate" 
+    # networking.gke.io/v1beta1.FrontendConfig: argoapp-preview-frontend-config"
   hosts:
-    - host: argoapp.goinit.net
+    - host: argoapp-preview.goinit.net
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: argoapp
-                port:
+                name: argoapp-preview
+                port: 
                   number: 80 
   tls: []
   # - secretName: chart-example-tls
