@@ -18,14 +18,21 @@ spec:
       sources:
         - repoURL: 'https://github.com/pranavdhopey/Sample-Helm-Chart.git'
           targetRevision: main
-          path: ingress-preview/
+          path: argoapp/
+          helm:
+            releaseName: argoapp
+            valueFiles:
+            - preview-values.yaml
+        - repoURL: 'https://github.com/pranavdhopey/Sample-Helm-Chart.git'
+          targetRevision: main
+          path: ingress/
           helm:
             releaseName: argoapp-preview
             valueFiles:
-            - values.yaml    
+            - preview-values.yaml    
       destination:
         server: '{{url}}'
-        namespace: pranav-app
+        namespace: pranav-app-preview
       syncPolicy:
         syncOptions:
           - CreateNamespace=true
