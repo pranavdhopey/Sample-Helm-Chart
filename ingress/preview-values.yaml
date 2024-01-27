@@ -28,7 +28,7 @@ ingress:
             pathType: Prefix
             backend:
               service:
-                name: argoapp-preview
+                name: argoapp
                 port: 
                   number: 80 
   tls: []
