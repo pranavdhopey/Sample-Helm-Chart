@@ -31,6 +31,16 @@ ingress:
                 name: argoapp
                 port:
                   number: 80 
+    - host: argoapp-preview.goinit.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: argoapp-preview
+                port:
+                  number: 80               
   tls: []
   # - secretName: chart-example-tls
   #   hosts:
