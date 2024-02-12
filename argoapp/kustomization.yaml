@@ -6,7 +6,6 @@ resources:
 
 helmCharts:
 - name: argoapp
-  chartPath: ../argoapp/
   version: 0.1.0
   releaseName: my-app
   valuesFile: 
