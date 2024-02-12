@@ -109,6 +109,6 @@ EnvVars:
     value: http://argoapp.goinit.net/ 
 
 ConfigMapEnabled: true
-extraEnvVarsCM: "my-app-argoapp-configmap-2"
+extraEnvVarsCM: "my-app-argoapp-configmap"
 
     
