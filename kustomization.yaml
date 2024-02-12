@@ -6,10 +6,11 @@ kind: Kustomization
 
 helmCharts:
 - name: argoapp
+  repo: https://pranavdhopey.github.io/Sample-Helm-Chart/
   version: 0.1.0
   releaseName: my-app
   namespace: my-app
-  valuesFile: ./values.yaml
+  valuesFile: ./argoapp/values.yaml
 
 configMapGenerator:
 - name: my-app-configs
