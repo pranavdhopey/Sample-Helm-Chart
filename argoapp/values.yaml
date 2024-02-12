@@ -3,16 +3,16 @@
 # Declare variables to be passed into your templates.
 
 Deployment:
-  enabled: true
-Rollout:
   enabled: false
+Rollout:
+  enabled: true
   # activeService: {{ .Values.RolloutEnabled.activeService }}
   # previewService: {{ .Values.RolloutEnabled.previewService }}
   autoPromotionEnabled: false
-  scaleDownDelaySeconds: 60
+  scaleDownDelaySeconds: 3600
 # PreviewServiceEnabled:
 previewservice:
-  enabled: false
+  enabled: true
   type: ClusterIP
   port: 80
   annotations:  
@@ -25,7 +25,7 @@ image:
   repository: argoproj/rollouts-demo
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "orange"
+  tag: "blue"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -108,6 +108,7 @@ EnvVars:
   - name: HOST_DNS
     value: http://argoapp.goinit.net/ 
 
+ConfigMapEnabled: false
 extraEnvVarsCM: "argoapp-configmap"
 
     

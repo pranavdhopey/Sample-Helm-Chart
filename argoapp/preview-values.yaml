@@ -32,7 +32,7 @@ nameOverride: ""
 fullnameOverride: ""
 
 labels: 
-  env: blue
+  env: green
 
 serviceAccount:
   # Specifies whether a service account should be created
