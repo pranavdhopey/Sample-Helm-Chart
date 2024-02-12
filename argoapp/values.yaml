@@ -108,7 +108,7 @@ EnvVars:
   - name: HOST_DNS
     value: http://argoapp.goinit.net/ 
 
-ConfigMapEnabled: false
+ConfigMapEnabled: true
 extraEnvVarsCM: "argoapp-configmap"
 
     
