@@ -20,4 +20,4 @@ configMapGenerator:
   - ENV_TYPE="non-prod"
 
 configurations:
-  - https://argoproj.github.io/argo-rollouts/features/kustomize/rollout-transform.yaml  
+  - https://argoproj.github.io/argo-rollouts/features/kustomize/rollout-transform.yaml
