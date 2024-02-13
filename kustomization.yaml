@@ -16,9 +16,9 @@ configMapGenerator:
 - name: my-app-argoapp-configmap
   # behavior: merge
   literals:
-  - HOST_DNS="http://argoapp-preview.goinit.net/"
-  - ENV="preview"
-  - ENV_TYPE="non-prod"
+  - HOST_DNS="http://argoapp.goinit.net/"
+  - ENV="prod"
+  - ENV_TYPE="prod"
 
 configurations:
   - https://argoproj.github.io/argo-rollouts/features/kustomize/rollout-transform.yaml
