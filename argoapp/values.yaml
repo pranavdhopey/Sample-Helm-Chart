@@ -104,9 +104,9 @@ tolerations: []
 
 affinity: {}
 
-EnvVars: 
-  - name: HOST_DNS
-    value: http://argoapp.goinit.net/ 
+# EnvVars: 
+#   - name: HOST_DNS
+#     value: http://argoapp.goinit.net/ 
 
 ConfigMapEnabled: true
 extraEnvVarsCM: "my-app-argoapp-configmap"

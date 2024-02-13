@@ -7,13 +7,13 @@ kind: Kustomization
 helmCharts:
 - name: argoapp
   repo: https://pranavdhopey.github.io/Sample-Helm-Chart/
-  version: 0.1.0
+  version: 0.2.0
   releaseName: my-app
   namespace: my-app
   valuesFile: ./argoapp/values.yaml
 
 configMapGenerator:
-- name: my-app-kustomize-configmap
+- name: my-app-argoapp-configmap
   # behavior: merge
   literals:
   - HOST_DNS="http://argoapp-preview.goinit.net/"
