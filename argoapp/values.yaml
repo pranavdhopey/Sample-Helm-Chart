@@ -22,17 +22,17 @@ previewservice:
 replicaCount: 1
 
 image:
-  repository: argoproj/rollouts-demo
+  repository: nginx #argoproj/rollouts-demo
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "green"
+  tag: "alpine"
 
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
 labels: 
-  env: green
+  env: blue
 
 serviceAccount:
   # Specifies whether a service account should be created
