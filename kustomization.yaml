@@ -11,6 +11,12 @@ helmCharts:
   releaseName: my-app
   namespace: my-app
   valuesFile: ./argoapp/values.yaml
+- name: ingress
+  repo: https://pranavdhopey.github.io/Sample-Helm-Chart/
+  version: 0.1.0
+  releaseName: my-app
+  namespace: my-app
+  valuesFile: ./ingress/values.yaml  
 
 configMapGenerator:
 - name: my-app-argoapp-configmap
