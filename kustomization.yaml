@@ -13,8 +13,8 @@ helmCharts:
   valuesFile: ./argoapp/values.yaml
 
 configMapGenerator:
-- name: my-app-argoapp-configmap
-  behavior: merge
+- name: my-app-kustomize-configmap
+  # behavior: merge
   literals:
   - HOST_DNS="http://argoapp-preview.goinit.net/"
   - ENV="preview"
