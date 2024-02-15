@@ -1,4 +1,4 @@
 APP: argoapp
-HOST_DNS: "http://argoapp-preview.goinit.net/"
-ENV: "prod-preview"
-ENV_TYPE: "prod-preview"
+HOST_DNS: "http://argoapp-preview-yellow.goinit.net/"
+ENV: "prod-preview-yellow"
+ENV_TYPE: "prod-preview-yellow"
