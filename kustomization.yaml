@@ -21,10 +21,12 @@ helmCharts:
 configMapGenerator:
 - name: my-app-argoapp-configmap
   # behavior: merge
-  literals:
-  - HOST_DNS="http://argoapp.goinit.net/"
-  - ENV="prod"
-  - ENV_TYPE="prod"
+  # literals:
+  # - HOST_DNS="http://argoapp.goinit.net/"
+  # - ENV="prod"
+  # - ENV_TYPE="prod"
+  files: 
+  - ./argoapp/config/prod-env.yaml   
 
 configurations:
   - https://argoproj.github.io/argo-rollouts/features/kustomize/rollout-transform.yaml
