@@ -7,7 +7,7 @@ kind: Kustomization
 helmCharts:
 - name: argoapp
   repo: https://pranavdhopey.github.io/Sample-Helm-Chart/
-  version: 0.2.0
+  version: 0.3.0
   releaseName: my-app
   namespace: my-app
   valuesFile: ./argoapp/values.yaml
@@ -26,7 +26,7 @@ configMapGenerator:
   # - ENV="prod"
   # - ENV_TYPE="prod"
   files: 
-  - ./argoapp/config/preview-env.yaml   
+  - ./argoapp/config/prod-env.yaml   
 
 configurations:
   - https://argoproj.github.io/argo-rollouts/features/kustomize/rollout-transform.yaml
