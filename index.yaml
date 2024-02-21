@@ -2,8 +2,18 @@ apiVersion: v1
 entries:
   argoapp:
   - apiVersion: v2
+    appVersion: 0.3.0
+    created: "2024-02-21T12:31:43.118868+05:30"
+    description: A Helm chart for Kubernetes
+    digest: f39e60191084bc8612c18091e13ec3f95f6215685d112522ad7d1a84f4cae141
+    name: argoapp
+    type: application
+    urls:
+    - https://pranavdhopey.github.io/Sample-Helm-Chart/argoapp-0.3.0.tgz
+    version: 0.3.0
+  - apiVersion: v2
     appVersion: 0.2.0
-    created: "2024-02-13T15:37:10.4525655+05:30"
+    created: "2024-02-21T12:31:43.1171916+05:30"
     description: A Helm chart for Kubernetes
     digest: 15ceb3b695cfb9c57246746454170bdde947dd7bb764c05ef79176f53a302f01
     name: argoapp
@@ -13,7 +23,7 @@ entries:
     version: 0.2.0
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2024-02-13T15:37:10.4525655+05:30"
+    created: "2024-02-21T12:31:43.1065455+05:30"
     description: A Helm chart for Kubernetes
     digest: c884cd7eebc51f408a88437eca600ae35f3da75d9d336a7403a088d982eeba4b
     name: argoapp
@@ -24,7 +34,7 @@ entries:
   ingress:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2024-02-13T15:37:10.4525655+05:30"
+    created: "2024-02-21T12:31:43.1199851+05:30"
     description: A Helm chart for Ingress
     digest: 295c1c81e5a4fe9a0a1d220e844fb777fa7f7e21545e713df5f8bd24f15ab4d4
     name: ingress
@@ -32,4 +42,4 @@ entries:
     urls:
     - https://pranavdhopey.github.io/Sample-Helm-Chart/ingress-0.1.0.tgz
     version: 0.1.0
-generated: "2024-02-13T15:37:10.3856723+05:30"
+generated: "2024-02-21T12:31:43.0555583+05:30"

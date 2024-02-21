@@ -108,3 +108,14 @@ ConfigMapEnabled: true
 extraEnvVarsCM: "my-app-argoapp-configmap"
 
     
+volumes:
+- name: podinfo
+  downwardAPI:
+    items:
+    - path: "labels"
+      fieldRef:
+        fieldPath: metadata.labels
+    
+volumeMounts:
+- name: podinfo
+  mountPath: /etc/podinfo
