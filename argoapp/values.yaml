@@ -25,14 +25,14 @@ image:
   repository: argoproj/rollouts-demo
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "blue"
+  tag: "green"
 
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
 labels: 
-  env: prod
+  env: prod-preview
 
 serviceAccount:
   # Specifies whether a service account should be created
