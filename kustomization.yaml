@@ -26,7 +26,7 @@ configMapGenerator:
   # - ENV="prod"
   # - ENV_TYPE="prod"
   files: 
-  - ./argoapp/config/preview-env.yaml   
+  - ./argoapp/config/prod-env.yaml   
 
 configurations:
   - https://argoproj.github.io/argo-rollouts/features/kustomize/rollout-transform.yaml

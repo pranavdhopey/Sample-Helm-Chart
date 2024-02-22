@@ -22,10 +22,10 @@ previewservice:
 replicaCount: 1
 
 image:
-  repository: argoproj/rollouts-demo
+  repository: pranavdhopey/nodejs-app # argoproj/rollouts-demo
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "green"
+  tag: "reloaderv1"
 
 imagePullSecrets: []
 nameOverride: ""
