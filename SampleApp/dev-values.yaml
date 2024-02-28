@@ -1,0 +1,54 @@
+app1:
+  enabled: true 
+  serviceAccount:
+    create: false  
+
+app2:
+  enabled: false  
+  serviceAccount:
+    create: false
+
+managedCertificateEnabled: false
+managedCertificate:
+  name: sampleapp-certificate
+  domains: 
+    - app1-dev.goinit.net
+    - app2-dev.goinit.net
+
+frontendConfigEnabled: false
+frontendConfig:
+  name: sampleapp-frontend-config
+  redirectToHttps:
+    enabled: true
+    responseCodeName: MOVED_PERMANENTLY_DEFAULT
+  # sslPolicy: gke-ingress-ssl-policy
+
+ingress:
+  enabled: true
+  name: sampleapp-ingress
+  className: ""
+  annotations: 
+    kubernetes.io/ingress.class: gce
+    # networking.gke.io/managed-certificates: "hello-apps-certificate" 
+    # networking.gke.io/v1beta1.FrontendConfig: "hello-apps-frontend-config"
+  hosts:
+    - host: app1-dev.goinit.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: dev-react
+                port:
+                  number: 80 
+    - host: app2-dev.goinit.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: dev-angular
+                port: 
+                  number: 80 

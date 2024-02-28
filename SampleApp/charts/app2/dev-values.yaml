@@ -1,0 +1,114 @@
+# Default values for argoapp.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+Deployment:
+  enabled: true
+Rollout:
+  enabled: false
+  # activeService: {{ .Values.RolloutEnabled.activeService }}
+  # previewService: {{ .Values.RolloutEnabled.previewService }}
+  autoPromotionEnabled: false
+  scaleDownDelaySeconds: 60
+# PreviewServiceEnabled:
+previewservice:
+  enabled: false
+  type: ClusterIP
+  port: 80
+  annotations:  
+    cloud.google.com/backend-config: '{"default": "app2-backendconfig"}'
+    cloud.google.com/neg: '{"ingress": true}'
+
+replicaCount: 1
+
+image:
+  repository: httpd
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "alpine"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+labels: 
+  env: dev
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: false
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 80
+  annotations:  
+    cloud.google.com/backend-config: '{"default": "app2-backendconfig"}'
+    cloud.google.com/neg: '{"ingress": true}'
+
+backendConfig:
+  name: app2-backendconfig
+  iap:
+    enabled: false
+    oauthclientCredentials:
+      secretName: myapp-iap-secret
+  healthCheck:
+    checkIntervalSec: 5
+    timeoutSec: 5
+    healthyThreshold: 2
+    unhealthyThreshold: 2
+    type: HTTP
+    requestPath: /
+    port: 80
+ #securityPolicyName: "example-security-policy"
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 70
+  targetMemoryUtilizationPercentage: 70
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+EnvVars: 
+  - name: HOST_DNS
+    value: http://argoapp-preview.goinit.net/ 
+
+ConfigMapEnabled: false
+extraEnvVarsCM: "argoapp-configmap"
+
+    

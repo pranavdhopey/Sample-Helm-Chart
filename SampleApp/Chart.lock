@@ -1,0 +1,9 @@
+dependencies:
+- name: app1
+  repository: file://charts/app1
+  version: 0.1.0
+- name: app2
+  repository: file://charts/app2
+  version: 0.1.0
+digest: sha256:b4071847051b8790b541e65c54dff98da188eb0ab5d81c9eefe8b7701540ff8e
+generated: "2024-02-28T14:57:53.5455562+05:30"
