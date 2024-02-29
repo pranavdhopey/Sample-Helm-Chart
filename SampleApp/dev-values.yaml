@@ -35,7 +35,7 @@ ingress:
             pathType: Prefix
             backend:
               service:
-                name: dev-react
+                name: app1
                 port:
                   number: 80 
     - host: app2-dev.goinit.net
@@ -45,6 +45,6 @@ ingress:
             pathType: Prefix
             backend:
               service:
-                name: dev-angular
+                name: app2
                 port: 
                   number: 80 
