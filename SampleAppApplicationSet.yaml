@@ -22,6 +22,8 @@ spec:
           helm:
             releaseName: sampleapp
             valueFiles:
+            - charts/app1/dev-values.yaml 
+            #- charts/app2/dev-values.yaml
             - dev-values.yaml  
       destination:
         server: '{{url}}'

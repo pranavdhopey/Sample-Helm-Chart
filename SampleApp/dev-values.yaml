@@ -1,12 +1,8 @@
 app1:
-  enabled: true 
-  serviceAccount:
-    create: false  
+  enabled: true   
 
 app2:
   enabled: false  
-  serviceAccount:
-    create: false
 
 managedCertificateEnabled: false
 managedCertificate:
