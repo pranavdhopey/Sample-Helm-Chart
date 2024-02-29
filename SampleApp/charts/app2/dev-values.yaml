@@ -106,9 +106,9 @@ affinity: {}
 
 EnvVars: 
   - name: HOST_DNS
-    value: http://argoapp-preview.goinit.net/ 
+    value: http://app2-dev.goinit.net/ 
 
 ConfigMapEnabled: false
-extraEnvVarsCM: "argoapp-configmap"
+extraEnvVarsCM: "app2-configmap"
 
     

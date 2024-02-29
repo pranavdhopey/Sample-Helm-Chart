@@ -20,7 +20,7 @@ frontendConfig:
   # sslPolicy: gke-ingress-ssl-policy
 
 ingress:
-  enabled: true
+  enabled: false
   name: sampleapp-ingress
   className: ""
   annotations: 

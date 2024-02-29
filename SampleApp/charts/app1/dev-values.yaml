@@ -126,9 +126,9 @@ readinessProbe:
              
 EnvVars: 
   - name: HOST_DNS
-    value: http://argoapp-preview.goinit.net/ 
+    value: http://app1-dev.goinit.net/ 
 
 ConfigMapEnabled: false
-extraEnvVarsCM: "argoapp-configmap"
+extraEnvVarsCM: "app1-configmap"
 
     
