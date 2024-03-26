@@ -1,0 +1,21 @@
+{{- if .Values.configMapData }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.configMapData.name }}
+  labels:
+    role: active
+data:
+  {{- toYaml .Values.configMapData.data | nindent 2 }}
+{{- end }}
+---
+{{- if .Values.configMapDataPreview }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.configMapDataPreview.name }}
+  labels:
+    role: preview  
+data:
+  {{- toYaml .Values.configMapDataPreview.data | nindent 2 }}
+{{- end }}

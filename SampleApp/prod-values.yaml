@@ -1,8 +1,39 @@
 app1:
-  enabled: false
+  enabled: true
+  # serviceAccount:
+  #   create: false
+  # service:
+  #   type: ClusterIP
+  #   port: 80
+  #   annotations:  
+  #     cloud.google.com/backend-config: '{"default": "app1-backendconfig"}'
+  #     cloud.google.com/neg: '{"ingress": true}'  
+  # previewservice:
+  #   enabled: true
+  #   type: ClusterIP
+  #   port: 80
+  #   annotations:  
+  #     cloud.google.com/backend-config: '{"default": "app1-backendconfig"}'
+  #     cloud.google.com/neg: '{"ingress": true}'
+    
 
 app2:
   enabled: false  
+
+
+configMapData: 
+  name: sampleapp-configmap
+  data: 
+    HOST_DNS: "http://sampleapp.goinit.net/"
+    ENV: "prod"
+    ENV_TYPE: "prod"
+
+configMapDataPreview:
+  name: sampleapp-preview-configmap
+  data:
+    HOST_DNS: "http://sampleapp-preview.goinit.net/"
+    ENV: "prod-preview"
+    ENV_TYPE: "prod-preview"
 
 managedCertificateEnabled: false
 managedCertificate:
@@ -28,7 +59,7 @@ ingress:
     # networking.gke.io/managed-certificates: "hello-apps-certificate" 
     # networking.gke.io/v1beta1.FrontendConfig: "hello-apps-frontend-config"
   hosts:
-    - host: app1.goinit.net
+    - host: sampleapp.goinit.net
       http:
         paths:
           - path: /
@@ -38,13 +69,13 @@ ingress:
                 name: dev-react
                 port:
                   number: 80 
-    - host: app2.goinit.net
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: dev-angular
-                port: 
-                  number: 80 
+    # - host: app2.goinit.net
+    #   http:
+    #     paths:
+    #       - path: /
+    #         pathType: Prefix
+    #         backend:
+    #           service:
+    #             name: dev-angular
+    #             port: 
+    #               number: 80 

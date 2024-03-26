@@ -20,7 +20,13 @@ spec:
       activeService: {{ include "app2.fullname" . }}
       previewService: {{ include "app2.fullname" . }}-preview
       autoPromotionEnabled: {{ .Values.Rollout.autoPromotionEnabled }}     
-      scaleDownDelaySeconds: {{ .Values.Rollout.scaleDownDelaySeconds }}      
+      scaleDownDelaySeconds: {{ .Values.Rollout.scaleDownDelaySeconds }}  
+      activeMetadata:
+        labels:
+          role: active
+      previewMetadata:
+        labels:
+          role: preview     
   template:
     metadata:
       {{- with .Values.podAnnotations }}

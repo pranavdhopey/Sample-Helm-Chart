@@ -3,16 +3,16 @@
 # Declare variables to be passed into your templates.
 
 Deployment:
-  enabled: true
-Rollout:
   enabled: false
+Rollout:
+  enabled: true
   # activeService: {{ .Values.RolloutEnabled.activeService }}
   # previewService: {{ .Values.RolloutEnabled.previewService }}
   autoPromotionEnabled: false
   scaleDownDelaySeconds: 300
 # PreviewServiceEnabled:
 previewservice:
-  enabled: false
+  enabled: true
   type: ClusterIP
   port: 80
   annotations:  
@@ -104,11 +104,21 @@ tolerations: []
 
 affinity: {}
 
-# EnvVars: 
-#   - name: HOST_DNS
-#     value: http://argoapp.goinit.net/ 
+EnvVars: 
+  - name: HOST_DNS
+    value: http://argoapp.goinit.net/ 
 
-ConfigMapEnabled: true
+ConfigMapEnabled: false
 extraEnvVarsCM: "my-app-argoapp-configmap"
 
+volumes:
+- name: podinfo
+  downwardAPI:
+    items:
+    - path: "labels"
+      fieldRef:
+        fieldPath: metadata.labels
     
+volumeMounts:
+- name: podinfo
+  mountPath: /etc/podinfo     

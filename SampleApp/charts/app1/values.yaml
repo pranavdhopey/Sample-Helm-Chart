@@ -3,16 +3,16 @@
 # Declare variables to be passed into your templates.
 
 Deployment:
-  enabled: true
-Rollout:
   enabled: false
+Rollout:
+  enabled: true
   # activeService: {{ .Values.RolloutEnabled.activeService }}
   # previewService: {{ .Values.RolloutEnabled.previewService }}
   autoPromotionEnabled: false
-  scaleDownDelaySeconds: 60
+  scaleDownDelaySeconds: 300
 # PreviewServiceEnabled:
 previewservice:
-  enabled: false
+  enabled: true
   type: ClusterIP
   port: 80
   annotations:  
@@ -22,7 +22,7 @@ previewservice:
 replicaCount: 1
 
 image:
-  repository: nginx
+  repository: nginx # argoproj/rollouts-demo
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "alpine"
@@ -32,7 +32,7 @@ nameOverride: ""
 fullnameOverride: ""
 
 labels: 
-  env: dev
+  env: prod
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -41,7 +41,7 @@ serviceAccount:
   annotations: {}
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
-  name: ""
+  name: "sampleapp"
 
 podAnnotations: {}
 
@@ -68,7 +68,7 @@ backendConfig:
   iap:
     enabled: false
     oauthclientCredentials:
-      secretName: myapp-iap-secret
+      secretName: app1-iap-secret
   healthCheck:
     checkIntervalSec: 5
     timeoutSec: 5
@@ -123,12 +123,25 @@ readinessProbe:
   timeoutSeconds: 1
   successThreshold: 1
   failureThreshold: 3   
-
+  
 EnvVars: 
   - name: HOST_DNS
-    value: http://argoapp-preview.goinit.net/ 
+    value: http://argoapp.goinit.net/ 
 
 ConfigMapEnabled: false
-extraEnvVarsCM: "argoapp-configmap"
+extraEnvVarsCM: "my-app-argoapp-configmap"
 
+configMapData: 
+  name: sampleapp-configmap
+  
+volumes:
+- name: podinfo
+  downwardAPI:
+    items:
+    - path: "labels"
+      fieldRef:
+        fieldPath: metadata.labels
     
+volumeMounts:
+- name: podinfo
+  mountPath: /etc/podinfo    

@@ -20,7 +20,13 @@ spec:
       activeService: {{ include "app1.fullname" . }}
       previewService: {{ include "app1.fullname" . }}-preview
       autoPromotionEnabled: {{ .Values.Rollout.autoPromotionEnabled }}     
-      scaleDownDelaySeconds: {{ .Values.Rollout.scaleDownDelaySeconds }}      
+      scaleDownDelaySeconds: {{ .Values.Rollout.scaleDownDelaySeconds }}   
+      activeMetadata:
+        labels:
+          role: active
+      previewMetadata:
+        labels:
+          role: preview   
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -58,14 +64,19 @@ spec:
                 name: {{ .Values.extraEnvVarsCM }}
             {{- end }}
           {{- end }}
+          {{- if .Values.configMapData }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Values.configMapData.name }}
+          {{- end }}
           ports:
             - name: http
               containerPort: 8080
               protocol: TCP
           livenessProbe:
-            {{- toYaml .Values.livenessProbe | indent 12 }}
+            {{- toYaml .Values.livenessProbe | nindent 12 }}
           readinessProbe:
-            {{- toYaml .Values.readinessProbe | indent 12 }}
+            {{- toYaml .Values.readinessProbe | nindent 12 }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
