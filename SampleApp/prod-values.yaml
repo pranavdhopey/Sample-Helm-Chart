@@ -62,7 +62,7 @@ ingress:
     - host: sampleapp.goinit.net
       http:
         paths:
-          - path: /
+          - path: /app1
             pathType: Prefix
             backend:
               service:
