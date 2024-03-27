@@ -21,6 +21,12 @@ app2:
   enabled: false  
 
 
+serviceAccount:
+  create: true
+  annotations: 
+    iam.gke.io/gcp-service-account: cloudtaskumesh@umesh-dev-gcp-412809.iam.gserviceaccount.com	
+  name: "sampleapp"
+
 configMapData: 
   name: sampleapp-configmap
   data: 
