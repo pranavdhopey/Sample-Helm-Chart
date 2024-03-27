@@ -76,7 +76,7 @@ backendConfig:
     unhealthyThreshold: 2
     type: HTTP
     requestPath: /
-    port: 8080
+    port: 80
  #securityPolicyName: "example-security-policy"
 
 resources: {}
@@ -104,12 +104,12 @@ tolerations: []
 
 affinity: {}
 
-EnvVars: 
-  - name: HOST_DNS
-    value: http://argoapp.goinit.net/ 
+EnvVars: []
+  # - name: HOST_DNS
+  #   value: http://argoapp.goinit.net/ 
 
-ConfigMapEnabled: false
-extraEnvVarsCM: "my-app-argoapp-configmap"
+configMapData: 
+  name: sampleapp-configmap
 
 volumes:
 - name: podinfo

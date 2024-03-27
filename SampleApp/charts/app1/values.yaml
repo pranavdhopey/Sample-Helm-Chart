@@ -124,9 +124,9 @@ readinessProbe:
   successThreshold: 1
   failureThreshold: 3   
   
-EnvVars: 
-  - name: HOST_DNS
-    value: http://argoapp.goinit.net/ 
+EnvVars: []
+#   - name: HOST_DNS
+#     value: http://argoapp.goinit.net/ 
 
 ConfigMapEnabled: false
 extraEnvVarsCM: "my-app-argoapp-configmap"

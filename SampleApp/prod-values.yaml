@@ -18,7 +18,7 @@ app1:
     
 
 app2:
-  enabled: false  
+  enabled: true  
 
 
 serviceAccount:
@@ -72,16 +72,16 @@ ingress:
             pathType: Prefix
             backend:
               service:
-                name: dev-react
+                name: sampleapp-app1
                 port:
                   number: 80 
     # - host: app2.goinit.net
     #   http:
     #     paths:
-    #       - path: /
-    #         pathType: Prefix
-    #         backend:
-    #           service:
-    #             name: dev-angular
-    #             port: 
-    #               number: 80 
+          - path: /app2
+            pathType: Prefix
+            backend:
+              service:
+                name: sampleapp-app2
+                port: 
+                  number: 80 

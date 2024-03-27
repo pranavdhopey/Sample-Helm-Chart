@@ -52,18 +52,13 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if .Values.EnvVars }}
           env:
           {{- range .Values.EnvVars }}
           - name: {{ .name }}
             value: {{ .value | quote }}
           {{- end }}
-          {{- if .Values.ConfigMapEnabled }}
-          envFrom:
-            {{- if .Values.extraEnvVarsCM }}
-            - configMapRef:
-                name: {{ .Values.extraEnvVarsCM }}
-            {{- end }}
-          {{- end }}
+          {{- end }}   
           {{- if .Values.configMapData }}
           envFrom:
             - configMapRef:
