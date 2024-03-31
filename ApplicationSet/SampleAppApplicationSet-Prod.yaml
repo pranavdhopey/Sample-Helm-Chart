@@ -1,8 +1,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: sampleapp
+  name: sampleapp-prod
   namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   generators:
   - list:
@@ -12,7 +14,7 @@ spec:
     
   template:
     metadata:
-      name: '{{cluster}}-sampleapp'
+      name: '{{cluster}}-sampleapp-prod'
     spec:
       project: default
       sources:
@@ -22,10 +24,10 @@ spec:
           helm:
             releaseName: sampleapp
             valueFiles:
-            - prod-values.yaml  
+            - values-prod.yaml  
       destination:
         server: '{{url}}'
-        namespace: pranav-app
+        namespace: pranav-prod
       syncPolicy:
         syncOptions:
           - CreateNamespace=true

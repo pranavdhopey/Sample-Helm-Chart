@@ -4,6 +4,26 @@ app1:
 app2:
   enabled: true  
 
+serviceAccount:
+  create: true
+  annotations: 
+    iam.gke.io/gcp-service-account: cloudtaskumesh@umesh-dev-gcp-412809.iam.gserviceaccount.com	
+  name: "sampleapp"
+
+configMapData: 
+  name: sampleapp-configmap
+  data: 
+    HOST_DNS: "http://sampleapp.goinit.net/"
+    ENV: "prod"
+    ENV_TYPE: "prod"
+
+configMapDataPreview:
+  name: sampleapp-preview-configmap
+  data:
+    HOST_DNS: "http://sampleapp-preview.goinit.net/"
+    ENV: "prod-preview"
+    ENV_TYPE: "prod-preview"  
+
 managedCertificateEnabled: false
 managedCertificate:
   name: sampleapp-certificate
@@ -31,20 +51,20 @@ ingress:
     - host: app1-dev.goinit.net
       http:
         paths:
-          - path: /
+          - path: /app1
             pathType: Prefix
             backend:
               service:
-                name: app1
+                name: sampleapp-app1
                 port:
-                  number: 80 
+                  number: 80
     - host: app2-dev.goinit.net
       http:
         paths:
-          - path: /
+          - path: /app2
             pathType: Prefix
             backend:
               service:
-                name: app2
+                name: sampleapp-app2
                 port: 
-                  number: 80 
+                  number: 80
