@@ -14,22 +14,22 @@ configMapData:
   name: sampleapp-configmap
   data: 
     HOST_DNS: "http://sampleapp.goinit.net/"
-    ENV: "dev"
-    ENV_TYPE: "dev"
+    ENV: "stage"
+    ENV_TYPE: "stage"
 
 configMapDataPreview:
   name: sampleapp-preview-configmap
   data:
     HOST_DNS: "http://sampleapp-preview.goinit.net/"
-    ENV: "dev-preview"
-    ENV_TYPE: "dev-preview"  
+    ENV: "stage-preview"
+    ENV_TYPE: "stage-preview"  
 
 managedCertificateEnabled: false
 managedCertificate:
   name: sampleapp-certificate
   domains: 
-    - app1-dev.goinit.net
-    - app2-dev.goinit.net
+    - app1-stage.goinit.net
+    - app2-stage.goinit.net
 
 frontendConfigEnabled: false
 frontendConfig:
@@ -48,7 +48,7 @@ ingress:
     # networking.gke.io/managed-certificates: "hello-apps-certificate" 
     # networking.gke.io/v1beta1.FrontendConfig: "hello-apps-frontend-config"
   hosts:
-    - host: app1-dev.goinit.net
+    - host: app1-stage.goinit.net
       http:
         paths:
           - path: /app1
@@ -58,7 +58,7 @@ ingress:
                 name: sampleapp-app1
                 port:
                   number: 80
-    # - host: app2-dev.goinit.net
+    # - host: app2-stage.goinit.net
     #   http:
     #     paths:
           - path: /app2
