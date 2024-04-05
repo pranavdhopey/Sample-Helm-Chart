@@ -40,17 +40,17 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if .Values.EnvVars }}
           env:
           {{- range .Values.EnvVars }}
           - name: {{ .name }}
             value: {{ .value | quote }}
           {{- end }}
-          {{- if .Values.ConfigMapEnabled }}
+          {{- end }}   
+          {{- if .Values.configMapData }}
           envFrom:
-            {{- if .Values.extraEnvVarsCM }}
             - configMapRef:
-                name: {{ .Values.extraEnvVarsCM }}
-            {{- end }}
+                name: {{ .Values.configMapData.name }}
           {{- end }}
           ports:
             - name: http

@@ -3,16 +3,16 @@
 # Declare variables to be passed into your templates.
 
 Deployment:
-  enabled: false
-Rollout:
   enabled: true
+Rollout:
+  enabled: false
   # activeService: {{ .Values.RolloutEnabled.activeService }}
   # previewService: {{ .Values.RolloutEnabled.previewService }}
   autoPromotionEnabled: false
   scaleDownDelaySeconds: 300
 # PreviewServiceEnabled:
 previewservice:
-  enabled: true
+  enabled: false
   type: ClusterIP
   port: 80
   annotations:  
@@ -127,9 +127,6 @@ readinessProbe:
 EnvVars: []
 #   - name: HOST_DNS
 #     value: http://argoapp.goinit.net/ 
-
-ConfigMapEnabled: false
-extraEnvVarsCM: "my-app-argoapp-configmap"
 
 configMapData: 
   name: sampleapp-configmap

@@ -1,25 +1,8 @@
 app1:
   enabled: true
-  # serviceAccount:
-  #   create: false
-  # service:
-  #   type: ClusterIP
-  #   port: 80
-  #   annotations:  
-  #     cloud.google.com/backend-config: '{"default": "app1-backendconfig"}'
-  #     cloud.google.com/neg: '{"ingress": true}'  
-  # previewservice:
-  #   enabled: true
-  #   type: ClusterIP
-  #   port: 80
-  #   annotations:  
-  #     cloud.google.com/backend-config: '{"default": "app1-backendconfig"}'
-  #     cloud.google.com/neg: '{"ingress": true}'
-    
-
+  
 app2:
   enabled: true  
-
 
 serviceAccount:
   create: true
@@ -57,7 +40,7 @@ frontendConfig:
   # sslPolicy: gke-ingress-ssl-policy
 
 ingress:
-  enabled: false
+  enabled: true
   name: sampleapp-ingress
   className: ""
   annotations: 
