@@ -31,7 +31,7 @@ image:
   repository: nginx # argoproj/rollouts-demo
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "alpine"
+  tag: "latest"
 
 imagePullSecrets: []
 nameOverride: ""
