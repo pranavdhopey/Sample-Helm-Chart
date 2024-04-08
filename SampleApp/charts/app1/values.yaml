@@ -18,7 +18,7 @@ Rollout:
       role: preview  
 # PreviewServiceEnabled:
 previewservice:
-  enabled: false
+  enabled: true
   type: ClusterIP
   port: 80
   annotations:  
