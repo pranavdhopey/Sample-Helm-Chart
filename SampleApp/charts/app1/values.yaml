@@ -9,7 +9,7 @@ Rollout:
   # activeService: {{ .Values.RolloutEnabled.activeService }}
   # previewService: {{ .Values.RolloutEnabled.previewService }}
   autoPromotionEnabled: false
-  scaleDownDelaySeconds: 300
+  scaleDownDelaySeconds: 60
   activeMetadata:
     labels:
       role: active
