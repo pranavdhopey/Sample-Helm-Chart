@@ -68,7 +68,7 @@ spec:
           envFrom:
             - configMapRef:
                 name: {{ .Values.configMapData.name }}
-          {{- else if eq .Values.Rollout.activeMetadata.labels.role "preview"}}  
+          {{- else if eq .Values.Rollout.previewMetadata.labels.role "preview"}}  
           envFrom:
             - configMapRef:
                 name: {{ .Values.configMapDataPreview.name }}    
