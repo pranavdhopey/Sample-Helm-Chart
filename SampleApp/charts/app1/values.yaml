@@ -128,11 +128,8 @@ EnvVars: []
 #   - name: HOST_DNS
 #     value: http://argoapp.goinit.net/ 
 
-# ConfigMapEnabled: false
-# extraEnvVarsCM: "my-app-argoapp-configmap"
-
-configMapData: {}
-  # name: sampleapp-configmap
+configMapData: 
+  name: sampleapp-configmap
   
 volumes:
 - name: podinfo

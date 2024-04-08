@@ -46,7 +46,7 @@ spec:
           - name: {{ .name }}
             value: {{ .value | quote }}
           {{- end }}
-          {{- end }}
+          {{- end }}   
           {{- if .Values.configMapData }}
           envFrom:
             - configMapRef:
