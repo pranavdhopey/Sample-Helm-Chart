@@ -1,10 +1,16 @@
 app1:
+  image: 
   enabled: true   
   configMapData:
     name: sampleapp-configmap
   EnvVars: 
   - name: OWNER
     value: Pranav
+  configMapData: 
+    name: sampleapp-configmap
+  configMapDataPreview:
+    name: sampleapp-preview-configmap
+  
 app2:
   enabled: true  
   configMapData:

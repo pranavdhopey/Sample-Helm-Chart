@@ -3,13 +3,19 @@
 # Declare variables to be passed into your templates.
 
 Deployment:
-  enabled: true
-Rollout:
   enabled: false
+Rollout:
+  enabled: true
   # activeService: {{ .Values.RolloutEnabled.activeService }}
   # previewService: {{ .Values.RolloutEnabled.previewService }}
   autoPromotionEnabled: false
   scaleDownDelaySeconds: 300
+  activeMetadata:
+    labels:
+      role: active
+  previewMetadata:
+    labels:
+      role: preview  
 # PreviewServiceEnabled:
 previewservice:
   enabled: false
@@ -128,8 +134,9 @@ EnvVars: []
 #   - name: HOST_DNS
 #     value: http://argoapp.goinit.net/ 
 
-configMapData: 
-  name: sampleapp-configmap
+configMapData: {}
+
+configMapDataPreview: {}
   
 volumes:
 - name: podinfo

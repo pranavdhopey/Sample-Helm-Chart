@@ -23,10 +23,10 @@ spec:
       scaleDownDelaySeconds: {{ .Values.Rollout.scaleDownDelaySeconds }}   
       activeMetadata:
         labels:
-          role: active
+          {{- toYaml .Values.Rollout.activeMetadata.labels | nindent 10 }}
       previewMetadata:
-        labels:
-          role: preview   
+        labels:  
+          {{- toYaml .Values.Rollout.previewMetadata.labels | nindent 10 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -59,10 +59,19 @@ spec:
             value: {{ .value | quote }}
           {{- end }}
           {{- end }}   
-          {{- if .Values.configMapData }}
+          # {{- if .Values.configMapData }}
+          # envFrom:
+          #   - configMapRef:
+          #       name: {{ .Values.configMapData.name }}
+          # {{- end }}
+          {{- if eq .Values.Rollout.activeMetadata.labels.role "active" }}
           envFrom:
             - configMapRef:
                 name: {{ .Values.configMapData.name }}
+          {{- else if eq .Values.Rollout.activeMetadata.labels.role "preview"}}  
+          envFrom:
+            - configMapRef:
+                name: {{ .Values.configMapDataPreview.name }}    
           {{- end }}
           ports:
             - name: http
