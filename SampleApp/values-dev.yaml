@@ -1,8 +1,17 @@
 app1:
   enabled: true   
-
+  configMapData:
+    name: sampleapp-configmap
+  EnvVars: 
+  - name: OWNER
+    value: Pranav
 app2:
   enabled: true  
+  configMapData:
+    name: sampleapp-configmap 
+  EnvVars: 
+  - name: OWNER
+    value: Pranav  
 
 serviceAccount:
   create: true
