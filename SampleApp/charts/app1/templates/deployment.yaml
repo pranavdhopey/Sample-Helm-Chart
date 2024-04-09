@@ -47,10 +47,19 @@ spec:
             value: {{ .value | quote }}
           {{- end }}
           {{- end }}   
-          {{- if .Values.configMapData }}
+          # {{- if .Values.configMapData }}
+          # envFrom:
+          #   - configMapRef:
+          #       name: {{ .Values.configMapData.name }}
+          # {{- end }}
+          {{- if eq .Values.labels.role "active" }}
           envFrom:
             - configMapRef:
                 name: {{ .Values.configMapData.name }}
+          {{- else if eq .Values.labels.role "preview"}}  
+          envFrom:
+            - configMapRef:
+                name: {{ .Values.configMapDataPreview.name }}    
           {{- end }}
           ports:
             - name: http

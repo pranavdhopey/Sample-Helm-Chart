@@ -9,10 +9,10 @@ app1:
   configMapData: 
     name: sampleapp-configmap
   configMapDataPreview:
-    name: sampleapp-preview-configmap
+    name: sampleapp-preview-configmapcd 
   
 app2:
-  enabled: true  
+  enabled: false  
   configMapData:
     name: sampleapp-configmap 
   EnvVars: 

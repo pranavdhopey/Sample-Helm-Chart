@@ -64,11 +64,11 @@ spec:
           #   - configMapRef:
           #       name: {{ .Values.configMapData.name }}
           # {{- end }}
-          {{- if eq .Values.Rollout.activeMetadata.labels.role "active" }}
+          {{- if eq .Values.labels.role "active" }}
           envFrom:
             - configMapRef:
                 name: {{ .Values.configMapData.name }}
-          {{- else if eq .Values.Rollout.previewMetadata.labels.role "preview"}}  
+          {{- else if eq .Values.labels.role "preview"}}  
           envFrom:
             - configMapRef:
                 name: {{ .Values.configMapDataPreview.name }}    
