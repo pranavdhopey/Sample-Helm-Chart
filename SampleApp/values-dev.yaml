@@ -8,7 +8,7 @@ app1:
   configMapData: 
     name: sampleapp-configmap
   configMapDataPreview:
-    name: sampleapp-preview-configmapcd 
+    name: sampleapp-preview-configmap
   
 app2:
   enabled: false  
