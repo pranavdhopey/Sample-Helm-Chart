@@ -1,5 +1,4 @@
 app1:
-  image: 
   enabled: true   
   configMapData:
     name: sampleapp-configmap
