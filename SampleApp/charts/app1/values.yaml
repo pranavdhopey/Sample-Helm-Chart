@@ -39,6 +39,7 @@ fullnameOverride: ""
 
 labels: 
   env: prod
+  role: active
 
 serviceAccount:
   # Specifies whether a service account should be created
