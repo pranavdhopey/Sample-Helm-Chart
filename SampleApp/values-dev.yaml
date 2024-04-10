@@ -12,11 +12,13 @@ app1:
   
 app2:
   enabled: false  
-  configMapData:
-    name: sampleapp-configmap 
   EnvVars: 
   - name: OWNER
     value: Pranav  
+  configMapData: 
+    name: sampleapp-configmap
+  configMapDataPreview:
+    name: sampleapp-preview-configmap  
 
 serviceAccount:
   create: true
@@ -72,9 +74,9 @@ ingress:
                 name: sampleapp-app1
                 port:
                   number: 80
-    # - host: app2-dev.goinit.net
-    #   http:
-    #     paths:
+    - host: app2-dev.goinit.net
+      http:
+        paths:
           - path: /app2
             pathType: Prefix
             backend:

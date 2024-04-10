@@ -58,9 +58,9 @@ ingress:
                 name: sampleapp-app1
                 port:
                   number: 80
-    # - host: app2-stage.goinit.net
-    #   http:
-    #     paths:
+    - host: app2-stage.goinit.net
+      http:
+        paths:
           - path: /app2
             pathType: Prefix
             backend:
