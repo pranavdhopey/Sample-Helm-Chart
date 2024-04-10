@@ -11,7 +11,7 @@ spec:
   source:
     repoURL: https://github.com/pranavdhopey/Sample-Helm-Chart.git
     targetRevision: HEAD
-    path: ApplicationSet/prod
+    path: ApplicationSets/prod
   destination:
     server: https://kubernetes.default.svc
   syncPolicy:
