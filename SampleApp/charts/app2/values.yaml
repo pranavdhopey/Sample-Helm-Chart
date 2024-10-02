@@ -4,25 +4,11 @@
 
 Deployment:
   enabled: true
-Rollout:
-  enabled: false
-  # activeService: {{ .Values.RolloutEnabled.activeService }}
-  # previewService: {{ .Values.RolloutEnabled.previewService }}
-  autoPromotionEnabled: false
-  scaleDownDelaySeconds: 300
-# PreviewServiceEnabled:
-previewservice:
-  enabled: false
-  type: ClusterIP
-  port: 80
-  annotations:  
-    cloud.google.com/backend-config: '{"default": "app2-backendconfig"}'
-    cloud.google.com/neg: '{"ingress": true}'
 
 replicaCount: 1
 
 image:
-  repository: httpd # argoproj/rollouts-demo
+  repository: nginx # argoproj/rollouts-demo
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "alpine"
@@ -32,7 +18,7 @@ nameOverride: ""
 fullnameOverride: ""
 
 labels: 
-  env: prod
+  env: dev
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -68,7 +54,7 @@ backendConfig:
   iap:
     enabled: false
     oauthclientCredentials:
-      secretName: myapp-iap-secret
+      secretName: app2-iap-secret
   healthCheck:
     checkIntervalSec: 5
     timeoutSec: 5
@@ -108,8 +94,11 @@ EnvVars: []
   # - name: HOST_DNS
   #   value: http://argoapp.goinit.net/ 
 
+ConfigMap:
+  enabled: true
+
 configMapData: {}
-  # name: sampleapp-configmap
+  # name: app2-configmap
 
 volumes:
 - name: podinfo

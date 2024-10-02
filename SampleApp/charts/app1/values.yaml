@@ -3,27 +3,7 @@
 # Declare variables to be passed into your templates.
 
 Deployment:
-  enabled: false
-Rollout:
   enabled: true
-  # activeService: {{ .Values.RolloutEnabled.activeService }}
-  # previewService: {{ .Values.RolloutEnabled.previewService }}
-  autoPromotionEnabled: false
-  scaleDownDelaySeconds: 60
-  activeMetadata:
-    labels:
-      role: active
-  previewMetadata:
-    labels:
-      role: preview  
-# PreviewServiceEnabled:
-previewservice:
-  enabled: true
-  type: ClusterIP
-  port: 80
-  annotations:  
-    cloud.google.com/backend-config: '{"default": "app1-backendconfig"}'
-    cloud.google.com/neg: '{"ingress": true}'
 
 replicaCount: 1
 
@@ -38,8 +18,7 @@ nameOverride: ""
 fullnameOverride: ""
 
 labels: 
-  env: prod
-  role: preview
+  env: dev
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -131,13 +110,15 @@ readinessProbe:
   successThreshold: 1
   failureThreshold: 3   
   
-EnvVars: []
-#   - name: HOST_DNS
-#     value: http://argoapp.goinit.net/ 
+EnvVars:
+  - name: HOST_DNS
+    value: http://app1.goinit.net/ 
+
+ConfigMap:
+  enabled: true
 
 configMapData: {}
-
-configMapDataPreview: {}
+  # name: app1-configmap
   
 volumes:
 - name: podinfo

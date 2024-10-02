@@ -1,4 +1,4 @@
-{{- if .Values.ConfigMapEnabled }}
+{{- if .Values.ConfigMap.enabled }}
 apiVersion: v1
 kind: ConfigMap
 metadata:

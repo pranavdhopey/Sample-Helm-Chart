@@ -1,44 +1,26 @@
 app1:
   enabled: true   
-  configMapData:
-    name: sampleapp-configmap
   EnvVars: 
   - name: OWNER
     value: Pranav
-  configMapData: 
-    name: sampleapp-configmap
-  configMapDataPreview:
-    name: sampleapp-preview-configmap
+  # nameOverride: "app1"
+  fullnameOverride: "app1"
+  
   
 app2:
-  enabled: false  
+  enabled: true  
   EnvVars: 
   - name: OWNER
     value: Pranav  
-  configMapData: 
-    name: sampleapp-configmap
-  configMapDataPreview:
-    name: sampleapp-preview-configmap  
+  # nameOverride: "app2"
+  fullnameOverride: "app2"
+
 
 serviceAccount:
   create: true
   annotations: 
     iam.gke.io/gcp-service-account: cloudtaskumesh@umesh-dev-gcp-412809.iam.gserviceaccount.com	
   name: "sampleapp"
-
-configMapData: 
-  name: sampleapp-configmap
-  data: 
-    HOST_DNS: "http://sampleapp.goinit.net/"
-    ENV: "dev"
-    ENV_TYPE: "dev"
-
-configMapDataPreview:
-  name: sampleapp-preview-configmap
-  data:
-    HOST_DNS: "http://sampleapp-preview.goinit.net/"
-    ENV: "dev-preview"
-    ENV_TYPE: "dev-preview"  
 
 managedCertificateEnabled: false
 managedCertificate:

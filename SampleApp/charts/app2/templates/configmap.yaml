@@ -1,8 +1,8 @@
-{{- if .Values.ConfigMapEnabled }}
+{{- if .Values.ConfigMap.enabled }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
- name:  {{ include "app2.fullname" . }}-configmap
+  name:  {{ include "app2.fullname" . }}-configmap
 data:
   {{- (.Files.Glob "config/*").AsConfig | nindent 2 }}
 {{- end }}
