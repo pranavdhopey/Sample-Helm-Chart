@@ -104,7 +104,7 @@ sample-app1:
     #   secretName: k8s-secret
     #   secretKey: DB_USERNAME
   configMap:
-    enabled: true
+    enabled: false
     name: sample-app1
     data:
       key1: value1
