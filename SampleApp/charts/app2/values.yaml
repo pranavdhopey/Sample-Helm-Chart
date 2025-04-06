@@ -2,55 +2,82 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-Deployment:
-  enabled: true
-
-replicaCount: 1
-
-image:
-  repository: nginx # argoproj/rollouts-demo
-  pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: "alpine"
-
-imagePullSecrets: []
-nameOverride: ""
-fullnameOverride: ""
-
-labels: 
-  env: dev
+app:
+  replicaCount: 1
+  image:
+    repository: nginx 
+    pullPolicy: IfNotPresent
+    tag: "alpine"
+  containerPort: 80  
+  imagePullSecrets: []
+  nameOverride: ""
+  fullnameOverride: ""
+  labels: 
+    env: dev
+  podAnnotations: {}
+  podSecurityContext: {}
+    # fsGroup: 2000
+  securityContext: {}
+    # capabilities:
+    #   drop:
+    #   - ALL
+    # readOnlyRootFilesystem: true
+    # runAsNonRoot: true
+    # runAsUser: 1000
+  resources: {}
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+  livenessProbe:
+    httpGet:
+      path: /
+      port: http
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    timeoutSeconds: 1
+    successThreshold: 1
+    failureThreshold: 3     
+  readinessProbe:
+    httpGet:
+      path: /
+      port: http
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    timeoutSeconds: 1
+    successThreshold: 1
+    failureThreshold: 3
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}  
+  volumes:
+  - name: podinfo
+    downwardAPI:
+      items:
+      - path: "labels"
+        fieldRef:
+          fieldPath: metadata.labels
+  volumeMounts:
+  - name: podinfo
+    mountPath: /etc/podinfo    
 
 serviceAccount:
-  # Specifies whether a service account should be created
   create: false
-  # Annotations to add to the service account
   annotations: {}
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
-  name: "sampleapp"
-
-podAnnotations: {}
-
-podSecurityContext: {}
-  # fsGroup: 2000
-
-securityContext: {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
+  name: ""
 
 service:
+  name: sample-app2-service
   type: ClusterIP
-  port: 80
+  targetPort: 80
   annotations:  
-    cloud.google.com/backend-config: '{"default": "app2-backendconfig"}'
+    cloud.google.com/backend-config: '{"default": "sample-app2-backendconfig"}'
     cloud.google.com/neg: '{"ingress": true}'
 
 backendConfig:
-  name: app2-backendconfig
+  name: sample-app2-backendconfig
   iap:
     enabled: false
     oauthclientCredentials:
@@ -65,18 +92,6 @@ backendConfig:
     port: 80
  #securityPolicyName: "example-security-policy"
 
-resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
-
 autoscaling:
   enabled: false
   minReplicas: 1
@@ -84,30 +99,26 @@ autoscaling:
   targetCPUUtilizationPercentage: 70
   targetMemoryUtilizationPercentage: 70
 
-nodeSelector: {}
+pdb:
+  enabled: false
+  maxUnavailable: 1
 
-tolerations: []
-
-affinity: {}
-
-EnvVars: []
+env: []
   # - name: HOST_DNS
   #   value: http://argoapp.goinit.net/ 
 
-ConfigMap:
-  enabled: true
+envFromSecrets: []
+  # - name: DB_USERNAME
+  #   secretName: k8s-secret
+  #   secretKey: DB_USERNAME
 
-configMapData: {}
-  # name: app2-configmap
+configMap:
+  enabled: false 
+  name: sample-app2
+  data: 
+    key1: value1   
 
-volumes:
-- name: podinfo
-  downwardAPI:
-    items:
-    - path: "labels"
-      fieldRef:
-        fieldPath: metadata.labels
-    
-volumeMounts:
-- name: podinfo
-  mountPath: /etc/podinfo     
+envFromconfigMap: []
+  # - name: APP_CONFIG
+  #   configMapName: app-config
+  #   configMapKey: config-key

@@ -1,0 +1,314 @@
+sample-app1:
+  enabled: true   
+  app:
+    replicaCount: 1
+    image:
+      repository: httpd # argoproj/rollouts-demo
+      pullPolicy: IfNotPresent
+      # Overrides the image tag whose default is the chart appVersion.
+      tag: "latest"
+    containerPort: 80  
+    imagePullSecrets: []
+    nameOverride: ""
+    fullnameOverride: ""
+    labels: 
+      env: dev
+    podAnnotations: {}
+    podSecurityContext: {}
+      # fsGroup: 2000
+    securityContext: {}
+      # capabilities:
+      #   drop:
+      #   - ALL
+      # readOnlyRootFilesystem: true
+      # runAsNonRoot: true
+      # runAsUser: 1000  
+    resources: {}
+      # limits:
+      #   cpu: 100m
+      #   memory: 128Mi
+      # requests:
+      #   cpu: 100m
+      #   memory: 128Mi
+    livenessProbe:
+      httpGet:
+        path: /
+        port: http
+      initialDelaySeconds: 10
+      periodSeconds: 10
+      timeoutSeconds: 1
+      successThreshold: 1
+      failureThreshold: 3     
+    readinessProbe:
+      httpGet:
+        path: /
+        port: http
+      initialDelaySeconds: 10
+      periodSeconds: 10
+      timeoutSeconds: 1
+      successThreshold: 1
+      failureThreshold: 3   
+    nodeSelector: {}
+    tolerations: []
+    affinity: {}
+    volumes:
+    - name: podinfo
+      downwardAPI:
+        items:
+        - path: "labels"
+          fieldRef:
+            fieldPath: metadata.labels
+    volumeMounts:
+    - name: podinfo
+      mountPath: /etc/podinfo    
+  serviceAccount:
+    create: false
+    annotations: {}
+    name: ""
+  service:
+    name: sample-app1-service
+    type: ClusterIP
+    targetPort: 80
+    annotations:  
+      cloud.google.com/backend-config: '{"default": "sample-app1-backendconfig"}'
+      cloud.google.com/neg: '{"ingress": true}'
+  backendConfig:
+    name: sample-app1-backendconfig
+    iap:
+      enabled: false
+      oauthclientCredentials:
+        secretName: app1-iap-secret
+    healthCheck:
+      checkIntervalSec: 5
+      timeoutSec: 5
+      healthyThreshold: 2
+      unhealthyThreshold: 2
+      type: HTTP
+      requestPath: /
+      port: 80
+    # securityPolicyName: "example-security-policy"
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 70
+    targetMemoryUtilizationPercentage: 70
+  pdb:
+    enabled: false
+    maxUnavailable: 1
+  env: []
+    # - name: HOST_DNS
+    #   value: http://app1.goinit.net/ 
+  envFromSecrets: []
+    # - name: DB_USERNAME
+    #   secretName: k8s-secret
+    #   secretKey: DB_USERNAME
+  configMap:
+    enabled: true
+    name: sample-app1
+    data:
+      key1: value1
+  envFromconfigMap: []
+    # - name: APP_CONFIG
+    #   configMapName: app-config
+    #   configMapKey: config-key
+  
+  
+sample-app2:
+  enabled: true  
+  app:
+    replicaCount: 1
+    image:
+      repository: nginx 
+      pullPolicy: IfNotPresent
+      tag: "alpine"
+    containerPort: 80  
+    imagePullSecrets: []
+    nameOverride: ""
+    fullnameOverride: ""
+    labels: 
+      env: dev
+    podAnnotations: {}
+    podSecurityContext: {}
+      # fsGroup: 2000
+    securityContext: {}
+      # capabilities:
+      #   drop:
+      #   - ALL
+      # readOnlyRootFilesystem: true
+      # runAsNonRoot: true
+      # runAsUser: 1000
+    resources: {}
+      # limits:
+      #   cpu: 100m
+      #   memory: 128Mi
+      # requests:
+      #   cpu: 100m
+      #   memory: 128Mi
+    livenessProbe:
+      httpGet:
+        path: /
+        port: http
+      initialDelaySeconds: 10
+      periodSeconds: 10
+      timeoutSeconds: 1
+      successThreshold: 1
+      failureThreshold: 3     
+    readinessProbe:
+      httpGet:
+        path: /
+        port: http
+      initialDelaySeconds: 10
+      periodSeconds: 10
+      timeoutSeconds: 1
+      successThreshold: 1
+      failureThreshold: 3
+    nodeSelector: {}
+    tolerations: []
+    affinity: {}  
+    volumes:
+    - name: podinfo
+      downwardAPI:
+        items:
+        - path: "labels"
+          fieldRef:
+            fieldPath: metadata.labels
+    volumeMounts:
+    - name: podinfo
+      mountPath: /etc/podinfo    
+  serviceAccount:
+    create: false
+    annotations: {}
+    name: ""
+  service:
+    name: sample-app2-service
+    type: ClusterIP
+    targetPort: 80
+    annotations:  
+      cloud.google.com/backend-config: '{"default": "sample-app2-backendconfig"}'
+      cloud.google.com/neg: '{"ingress": true}'
+  backendConfig:
+    name: sample-app2-backendconfig
+    iap:
+      enabled: false
+      oauthclientCredentials:
+        secretName: app2-iap-secret
+    healthCheck:
+      checkIntervalSec: 5
+      timeoutSec: 5
+      healthyThreshold: 2
+      unhealthyThreshold: 2
+      type: HTTP
+      requestPath: /
+      port: 80
+  #securityPolicyName: "example-security-policy"
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 70
+    targetMemoryUtilizationPercentage: 70
+  pdb:
+    enabled: false
+    maxUnavailable: 1
+  env: []
+    # - name: HOST_DNS
+    #   value: http://argoapp.goinit.net/ 
+  envFromSecrets: []
+    # - name: DB_USERNAME
+    #   secretName: k8s-secret
+    #   secretKey: DB_USERNAME
+  configMap:
+    enabled: false 
+    name: sample-app2
+    data: 
+      key1: value1   
+  envFromconfigMap: []
+    # - name: APP_CONFIG
+    #   configMapName: app-config
+    #   configMapKey: config-key
+
+
+serviceAccount:
+  create: true
+  annotations: 
+    iam.gke.io/gcp-service-account: cloudtaskumesh@umesh-dev-gcp-412809.iam.gserviceaccount.com	
+  labels:
+    app: sampleapp
+  name: "sampleapp"
+
+managedCertificateEnabled: false
+managedCertificate:
+  name: sampleapp-certificate
+  domains: 
+    - app1-dev.goinit.net
+    - app2-dev.goinit.net
+
+frontendConfigEnabled: false
+frontendConfig:
+  name: sampleapp-frontend-config
+  redirectToHttps:
+    enabled: true
+    responseCodeName: MOVED_PERMANENTLY_DEFAULT
+  # sslPolicy: gke-ingress-ssl-policy
+
+ingress:
+  enabled: true
+  name: sampleapp-ingress
+  className: ""
+  annotations: 
+    kubernetes.io/ingress.class: gce
+    # networking.gke.io/managed-certificates: "hello-apps-certificate" 
+    # networking.gke.io/v1beta1.FrontendConfig: "hello-apps-frontend-config"
+  hosts:
+    - host: app1.goinit.net
+      http:
+        paths:
+          - path: /app1
+            pathType: Prefix
+            backend:
+              service:
+                name: app1
+                port:
+                  number: 80
+    - host: app2.goinit.net
+      http:
+        paths:
+          - path: /app2
+            pathType: Prefix
+            backend:
+              service:
+                name: app2
+                port: 
+                  number: 80
+
+
+internal_ingress:
+  enabled: true
+  name: sampleapp-internal-ingress
+  className: ""
+  annotations: 
+    kubernetes.io/ingress.class: gce-internal
+    # networking.gke.io/managed-certificates: "hello-apps-certificate" 
+    # networking.gke.io/v1beta1.FrontendConfig: "hello-apps-frontend-config"
+  hosts:
+    - host: app1.goinit.net
+      http:
+        paths:
+          - path: /app1
+            pathType: Prefix
+            backend:
+              service:
+                name: app1
+                port:
+                  number: 80
+    - host: app2.goinit.net
+      http:
+        paths:
+          - path: /app2
+            pathType: Prefix
+            backend:
+              service:
+                name: app2
+                port: 
+                  number: 80

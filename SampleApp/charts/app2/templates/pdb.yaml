@@ -1,0 +1,14 @@
+{{- if .Values.pdb.enabled }}
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ .Values.app.name }}-pdb
+  labels:
+    {{- toYaml .Values.app.labels | nindent 4 }}
+spec:
+  # minAvailable: {{ .Values.pdb.minAvailable }}
+  maxUnavailable: {{ .Values.pdb.maxUnavailable }}
+  selector:
+    matchLabels:
+      {{- toYaml .Values.app.labels | nindent 4 }}
+{{- end }}

@@ -1,3 +1,0 @@
-APP: app1
-HOST_DNS: "http://app1.goinit.net/"
-ENV: "dev"

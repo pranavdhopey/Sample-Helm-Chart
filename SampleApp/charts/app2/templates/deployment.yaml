@@ -1,85 +1,80 @@
-{{- if .Values.Deployment.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "app2.fullname" . }}
+  name: {{ .Values.app.name }}
   labels:
-    {{- include "app2.labels" . | nindent 4 }}
-    {{- with .Values.labels }}
-    {{- toYaml . | nindent 4 }}
-    {{- end }} 
+    {{- toYaml .Values.app.labels | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.app.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "app2.selectorLabels" . | nindent 6 }}
+      {{- toYaml .Values.app.labels | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
+      {{- with .Values.app.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "app2.selectorLabels" . | nindent 8 }}
-        {{- with .Values.labels }}
-        {{- toYaml . | nindent 8 }}
-        {{- end }} 
+        {{- toYaml .Values.app.labels | nindent 8 }}
     spec:
-      {{- with .Values.imagePullSecrets }}
+      {{- with .Values.app.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "app2.serviceAccountName" . }}
+      serviceAccountName: {{ .Values.serviceAccount.name }}
       securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+        {{- toYaml .Values.app.podSecurityContext | nindent 8 }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          {{- if .Values.EnvVars }}
+            {{- toYaml .Values.app.securityContext | nindent 12 }}
+          image: "{{ .Values.app.image.repository }}:{{ .Values.app.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.app.image.pullPolicy }}
           env:
-          {{- range .Values.EnvVars }}
+          {{- range .Values.env }}
           - name: {{ .name }}
             value: {{ .value | quote }}
           {{- end }}
-          {{- end }}   
-          {{- if .Values.configMapData }}
-          envFrom:
-            - configMapRef:
-                name: {{ .Values.configMapData.name }}
+          {{- range .Values.envFromSecrets }}
+          - name: {{ .name }}
+            valueFrom:
+              secretKeyRef:
+                name: {{ .secretName }}
+                key: {{ .secretKey }}
+          {{- end }}
+          {{- range .Values.envFromconfigMap }}
+          - name: {{ .name }}
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .configMapName }}
+                key: {{ .configMapKey }}
           {{- end }}
           ports:
             - name: http
-              containerPort: {{ .Values.service.port }}
+              containerPort: {{ .Values.app.containerPort }}
               protocol: TCP
           livenessProbe:
-            httpGet:
-              path: /
-              port: http
+            {{- toYaml .Values.app.livenessProbe | nindent 12 }}
           readinessProbe:
-            httpGet:
-              path: /
-              port: http
+            {{- toYaml .Values.app.readinessProbe | nindent 12 }}
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+            {{- toYaml .Values.app.resources | nindent 12 }}
           volumeMounts:
-            {{- toYaml .Values.volumeMounts | default "" | nindent 12 }}   
-      {{- with .Values.nodeSelector }}
+            {{- toYaml .Values.app.volumeMounts | default "" | nindent 12 }}   
+      {{- with .Values.app.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.affinity }}
+      {{- with .Values.app.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.tolerations }}
+      {{- with .Values.app.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       volumes:
-        {{- toYaml .Values.volumes | default "" | nindent 8 }}
-{{- end }}
+        {{- toYaml .Values.app.volumes | default "" | nindent 8 }}
