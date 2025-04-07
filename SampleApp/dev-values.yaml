@@ -51,20 +51,12 @@ sample-app1:
     nodeSelector: {}
     tolerations: []
     affinity: {}
-    volumes:
-    - name: podinfo
-      downwardAPI:
-        items:
-        - path: "labels"
-          fieldRef:
-            fieldPath: metadata.labels
-    volumeMounts:
-    - name: podinfo
-      mountPath: /etc/podinfo    
+    volumes: []
+    volumeMounts: [] 
   serviceAccount:
     create: false
     annotations: {}
-    name: ""
+    name: "sampleapp"
   service:
     name: sample-app1-service
     type: ClusterIP
@@ -112,8 +104,7 @@ sample-app1:
     # - name: APP_CONFIG
     #   configMapName: app-config
     #   configMapKey: config-key
-  
-  
+
 sample-app2:
   enabled: true  
   app:
@@ -166,20 +157,12 @@ sample-app2:
     nodeSelector: {}
     tolerations: []
     affinity: {}  
-    volumes:
-    - name: podinfo
-      downwardAPI:
-        items:
-        - path: "labels"
-          fieldRef:
-            fieldPath: metadata.labels
-    volumeMounts:
-    - name: podinfo
-      mountPath: /etc/podinfo    
+    volumes: []
+    volumeMounts: []   
   serviceAccount:
     create: false
     annotations: {}
-    name: ""
+    name: "sampleapp"
   service:
     name: sample-app2-service
     type: ClusterIP
@@ -228,7 +211,6 @@ sample-app2:
     #   configMapName: app-config
     #   configMapKey: config-key
 
-
 serviceAccount:
   create: true
   annotations: 
@@ -236,6 +218,38 @@ serviceAccount:
   labels:
     app: sampleapp
   name: "sampleapp"
+
+jobs:
+  - name: test-cronjob
+    enabled: true
+    failedJobsHistoryLimit: 1
+    successfulJobsHistoryLimit: 5
+    concurrencyPolicy: Allow
+    restartPolicy: OnFailure
+    serviceAccount: sampleapp 
+    schedule: "0 * * * *"
+    timeZone: ""
+    image:
+      repository: alpine
+      tag: latest
+      imagePullPolicy: IfNotPresent
+    labels:
+      app: cron
+      env: dev
+    podSecurityContext:
+      runAsNonRoot: true  # Ensures the container runs as a non-root user
+      runAsUser: 1000
+      seccompProfile:
+        type: RuntimeDefault  # Enforces the default seccomp profile for better security
+    securityContext:
+      allowPrivilegeEscalation: false  # Ensures no privilege escalation
+      capabilities:
+        drop:
+          - "ALL"  # Drop all Linux capabilities to comply with the restricted policy
+    env: 
+    command: ["/bin/sh", "-c"]
+    args:
+      - echo "hello"
 
 managedCertificateEnabled: false
 managedCertificate:

@@ -53,16 +53,16 @@ app:
   nodeSelector: {}
   tolerations: []
   affinity: {}
-  volumes:
-  - name: podinfo
-    downwardAPI:
-      items:
-      - path: "labels"
-        fieldRef:
-          fieldPath: metadata.labels
-  volumeMounts:
-  - name: podinfo
-    mountPath: /etc/podinfo    
+  volumes: []
+  # - name: podinfo
+  #   downwardAPI:
+  #     items:
+  #     - path: "labels"
+  #       fieldRef:
+  #         fieldPath: metadata.labels
+  volumeMounts: []
+  # - name: podinfo
+  #   mountPath: /etc/podinfo    
 
 serviceAccount:
   create: false
