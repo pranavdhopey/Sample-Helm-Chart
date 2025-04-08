@@ -47,13 +47,6 @@ spec:
                 name: {{ .secretName }}
                 key: {{ .secretKey }}
           {{- end }}
-          {{- range .Values.envFromconfigMap }}
-          - name: {{ .name }}
-            valueFrom:
-              configMapKeyRef:
-                name: {{ .configMapName }}
-                key: {{ .configMapKey }}
-          {{- end }}
           ports:
             - name: http
               containerPort: {{ .Values.app.containerPort }}

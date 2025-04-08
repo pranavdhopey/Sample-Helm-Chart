@@ -111,14 +111,3 @@ envFromSecrets: []
   # - name: DB_USERNAME
   #   secretName: k8s-secret
   #   secretKey: DB_USERNAME
-
-configMap:
-  enabled: false 
-  name: sample-app2
-  data: 
-    key1: value1   
-
-envFromconfigMap: []
-  # - name: APP_CONFIG
-  #   configMapName: app-config
-  #   configMapKey: config-key

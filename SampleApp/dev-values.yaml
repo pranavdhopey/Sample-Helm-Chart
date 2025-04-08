@@ -3,10 +3,9 @@ sample-app1:
   app:
     replicaCount: 1
     image:
-      repository: httpd # argoproj/rollouts-demo
+      repository: httpd 
       pullPolicy: IfNotPresent
-      # Overrides the image tag whose default is the chart appVersion.
-      tag: "latest"
+      tag: "alpine"
     containerPort: 80  
     imagePullSecrets: []
     nameOverride: ""
@@ -95,15 +94,6 @@ sample-app1:
     # - name: DB_USERNAME
     #   secretName: k8s-secret
     #   secretKey: DB_USERNAME
-  configMap:
-    enabled: false
-    name: sample-app1
-    data:
-      key1: value1
-  envFromconfigMap: []
-    # - name: APP_CONFIG
-    #   configMapName: app-config
-    #   configMapKey: config-key
 
 sample-app2:
   enabled: true  
@@ -201,15 +191,6 @@ sample-app2:
     # - name: DB_USERNAME
     #   secretName: k8s-secret
     #   secretKey: DB_USERNAME
-  configMap:
-    enabled: false 
-    name: sample-app2
-    data: 
-      key1: value1   
-  envFromconfigMap: []
-    # - name: APP_CONFIG
-    #   configMapName: app-config
-    #   configMapKey: config-key
 
 serviceAccount:
   create: true
@@ -251,12 +232,14 @@ jobs:
     args:
       - echo "hello"
 
-managedCertificateEnabled: false
+managedCertificateenabled: true
 managedCertificate:
-  name: sampleapp-certificate
-  domains: 
+  - name: sampleapp1-certificate
+    domains: 
     - app1-dev.goinit.net
-    - app2-dev.goinit.net
+  - name: sampleapp2-certificate
+    domains: 
+    - app2-dev.goinit.net  
 
 frontendConfigEnabled: false
 frontendConfig:
@@ -272,13 +255,13 @@ ingress:
   className: ""
   annotations: 
     kubernetes.io/ingress.class: gce
-    # networking.gke.io/managed-certificates: "hello-apps-certificate" 
+    networking.gke.io/managed-certificates: "sampleapp1-certificate,sampleapp2-certificate" 
     # networking.gke.io/v1beta1.FrontendConfig: "hello-apps-frontend-config"
   hosts:
     - host: app1.goinit.net
       http:
         paths:
-          - path: /app1
+          - path: /
             pathType: Prefix
             backend:
               service:
@@ -303,13 +286,11 @@ internal_ingress:
   className: ""
   annotations: 
     kubernetes.io/ingress.class: gce-internal
-    # networking.gke.io/managed-certificates: "hello-apps-certificate" 
-    # networking.gke.io/v1beta1.FrontendConfig: "hello-apps-frontend-config"
   hosts:
     - host: app1.goinit.net
       http:
         paths:
-          - path: /app1
+          - path: /
             pathType: Prefix
             backend:
               service:

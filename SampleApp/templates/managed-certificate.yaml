@@ -1,5 +1,5 @@
-{{- if .Values.managedCertificateEnabled }}
-{{- range .Values.managedCertificates }}
+{{- if .Values.managedCertificateenabled }}
+{{- range .Values.managedCertificate }}
 apiVersion: networking.gke.io/v1
 kind: ManagedCertificate
 metadata:
