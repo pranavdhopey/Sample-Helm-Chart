@@ -34,7 +34,7 @@ app:
   livenessProbe:
     httpGet:
       path: /
-      port: http
+      port: 80
     initialDelaySeconds: 10
     periodSeconds: 10
     timeoutSeconds: 1
@@ -43,7 +43,7 @@ app:
   readinessProbe:
     httpGet:
       path: /
-      port: http
+      port: 80
     initialDelaySeconds: 10
     periodSeconds: 10
     timeoutSeconds: 1

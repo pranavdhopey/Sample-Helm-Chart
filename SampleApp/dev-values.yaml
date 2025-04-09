@@ -129,7 +129,7 @@ sample-app2:
     livenessProbe:
       httpGet:
         path: /
-        port: http
+        port: 80
       initialDelaySeconds: 10
       periodSeconds: 10
       timeoutSeconds: 1
@@ -138,7 +138,7 @@ sample-app2:
     readinessProbe:
       httpGet:
         path: /
-        port: http
+        port: 80
       initialDelaySeconds: 10
       periodSeconds: 10
       timeoutSeconds: 1
