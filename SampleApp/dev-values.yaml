@@ -1,6 +1,7 @@
 sample-app1:
   enabled: true   
   app:
+    name: sample-app1
     replicaCount: 1
     image:
       repository: httpd 
@@ -12,6 +13,7 @@ sample-app1:
     fullnameOverride: ""
     labels: 
       env: dev
+      app: sample-app1
     podAnnotations: {}
     podSecurityContext: {}
       # fsGroup: 2000
@@ -58,6 +60,9 @@ sample-app1:
     name: "sampleapp"
   service:
     name: sample-app1-service
+    labels: 
+      env: dev
+      app: sample-app1
     type: ClusterIP
     port: 80
     targetPort: 80
@@ -99,6 +104,7 @@ sample-app1:
 sample-app2:
   enabled: true  
   app:
+    name: sample-app2
     replicaCount: 1
     image:
       repository: nginx 
@@ -110,6 +116,7 @@ sample-app2:
     fullnameOverride: ""
     labels: 
       env: dev
+      app: sample-app2
     podAnnotations: {}
     podSecurityContext: {}
       # fsGroup: 2000
@@ -156,6 +163,9 @@ sample-app2:
     name: "sampleapp"
   service:
     name: sample-app2-service
+    labels: 
+      env: dev
+      app: sample-app2
     type: ClusterIP
     port: 80
     targetPort: 80

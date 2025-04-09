@@ -3,6 +3,7 @@
 # Declare variables to be passed into your templates.
 
 app:
+  name: sample-app2
   replicaCount: 1
   image:
     repository: nginx 
@@ -14,6 +15,7 @@ app:
   fullnameOverride: ""
   labels: 
     env: dev
+    app: sample-app2
   podAnnotations: {}
   podSecurityContext: {}
     # fsGroup: 2000

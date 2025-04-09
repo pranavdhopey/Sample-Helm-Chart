@@ -3,6 +3,7 @@
 # Declare variables to be passed into your templates.
 
 app:
+  name: sample-app1
   replicaCount: 1
   image:
     repository: httpd # argoproj/rollouts-demo
@@ -15,6 +16,7 @@ app:
   fullnameOverride: ""
   labels: 
     env: dev
+    app: sample-app1
   podAnnotations: {}
   podSecurityContext: {}
     # fsGroup: 2000
