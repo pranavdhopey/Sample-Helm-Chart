@@ -222,6 +222,7 @@ jobs:
     serviceAccount: sampleapp 
     schedule: "0 * * * *"
     timeZone: ""
+    suspend: false
     image:
       repository: alpine
       tag: latest

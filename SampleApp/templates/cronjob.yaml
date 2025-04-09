@@ -13,6 +13,7 @@ spec:
   successfulJobsHistoryLimit: {{ $job.successfulJobsHistoryLimit }}
   schedule: {{ $job.schedule | quote }}
   timeZone: {{ $job.timeZone }}
+  suspend: {{ $job.suspend }}
   jobTemplate:
     spec:
       template:
