@@ -1,8 +1,0 @@
-{{- if .Values.ConfigMapEnabled }}
-apiVersion: v1
-kind: ConfigMap
-metadata:
- name:  {{ include "argoapp.fullname" . }}-configmap
-data:
-  {{- (.Files.Glob "config/*").AsConfig | nindent 2 }}
-{{- end }}
