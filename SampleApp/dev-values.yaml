@@ -270,7 +270,7 @@ ingress:
     networking.gke.io/managed-certificates: "sampleapp1-certificate,sampleapp2-certificate" 
     # networking.gke.io/v1beta1.FrontendConfig: "hello-apps-frontend-config"
   hosts:
-    - host: app1.goinit.net
+    - host: app1-dev.goinit.net
       http:
         paths:
           - path: /
@@ -280,7 +280,7 @@ ingress:
                 name: app1
                 port:
                   number: 80
-    - host: app2.goinit.net
+    - host: app2-dev.goinit.net
       http:
         paths:
           - path: /app2
@@ -293,7 +293,7 @@ ingress:
 
 
 internal_ingress:
-  enabled: true
+  enabled: false
   name: sampleapp-internal-ingress
   className: ""
   annotations: 
