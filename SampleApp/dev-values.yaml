@@ -244,7 +244,7 @@ jobs:
     args:
       - echo "hello"
 
-managedCertificateenabled: true
+managedCertificateEnabled: true
 managedCertificate:
   - name: sampleapp1-certificate
     domains: 
@@ -253,7 +253,7 @@ managedCertificate:
     domains: 
     - app2-dev.goinit.net  
 
-frontendConfigEnabled: false
+frontendConfigEnabled: true
 frontendConfig:
   name: sampleapp-frontend-config
   redirectToHttps:
@@ -267,8 +267,9 @@ ingress:
   className: ""
   annotations: 
     kubernetes.io/ingress.class: gce
+    kubernetes.io/ingress.allow-http: 'true'
     networking.gke.io/managed-certificates: "sampleapp1-certificate,sampleapp2-certificate" 
-    # networking.gke.io/v1beta1.FrontendConfig: "hello-apps-frontend-config"
+    networking.gke.io/v1beta1.FrontendConfig: "sampleapp-frontend-config"
   hosts:
     - host: app1-dev.goinit.net
       http:
