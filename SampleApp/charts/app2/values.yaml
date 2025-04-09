@@ -71,6 +71,7 @@ serviceAccount:
 service:
   name: sample-app2-service
   type: ClusterIP
+  port: 80
   targetPort: 80
   annotations:  
     cloud.google.com/backend-config: '{"default": "sample-app2-backendconfig"}'
