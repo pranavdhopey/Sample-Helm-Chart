@@ -285,7 +285,7 @@ ingress:
     - host: app2-dev.goinit.net
       http:
         paths:
-          - path: /app2
+          - path: /
             pathType: Prefix
             backend:
               service:
@@ -314,7 +314,7 @@ internal_ingress:
     - host: app2.goinit.net
       http:
         paths:
-          - path: /app2
+          - path: /
             pathType: Prefix
             backend:
               service:
