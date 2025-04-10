@@ -1,38 +1,33 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: argocd-app
-  namespace: pranav
+  name: sampleapp-prod
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   generators:
   - list:
       elements:
-      - cluster: test
+      - cluster: argo
         url: https://kubernetes.default.svc
     
   template:
     metadata:
-      name: '{{cluster}}-argoapp'
+      name: '{{cluster}}-sampleapp-prod'
     spec:
       project: default
       sources:
         - repoURL: 'https://github.com/pranavdhopey/Sample-Helm-Chart.git'
-          targetRevision: main
-          path: argoapp/
+          targetRevision: test
+          path: SampleApp/
           helm:
-            releaseName: argoapp
+            releaseName: sampleapp
             valueFiles:
-            - values.yaml
-        - repoURL: 'https://github.com/pranavdhopey/Sample-Helm-Chart.git'
-          targetRevision: main
-          path: ingress/
-          helm:
-            releaseName: argoapp
-            valueFiles:
-            - values.yaml    
+            - prod-values.yaml  
       destination:
         server: '{{url}}'
-        namespace: pranav-app
+        namespace: apps-prod
       syncPolicy:
         syncOptions:
           - CreateNamespace=true

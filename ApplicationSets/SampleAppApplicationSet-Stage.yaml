@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: sampleapp-prod
+  name: sampleapp-stage
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -14,20 +14,20 @@ spec:
     
   template:
     metadata:
-      name: '{{cluster}}-sampleapp-prod'
+      name: '{{cluster}}-sampleapp-stage'
     spec:
       project: default
       sources:
         - repoURL: 'https://github.com/pranavdhopey/Sample-Helm-Chart.git'
-          targetRevision: main
+          targetRevision: test
           path: SampleApp/
           helm:
             releaseName: sampleapp
             valueFiles:
-            - values-prod.yaml  
+            - stage-values.yaml  
       destination:
         server: '{{url}}'
-        namespace: pranav-prod
+        namespace: apps-stage
       syncPolicy:
         syncOptions:
           - CreateNamespace=true
