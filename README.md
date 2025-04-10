@@ -11,10 +11,10 @@ This Helm chart deploys the **SampleApp** suite into a Kubernetes cluster. It su
 
 ## 🚀 Installation
 
-Clone the repository and switch to the `test` branch:
+Clone the repository and switch to the `helm` branch:
 
 ```bash
-git clone -b test https://github.com/pranavdhopey/Sample-Helm-Chart.git
+git clone -b helm https://github.com/pranavdhopey/Sample-Helm-Chart.git
 cd Sample-Helm-Chart/SampleApp
 ```
 
