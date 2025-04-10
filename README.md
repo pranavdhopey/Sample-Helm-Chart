@@ -1,6 +1,7 @@
 # Sample Helm Chart
 
-This repository contains a sample Helm chart used to demonstrate Helm packaging, templating, and deployment in Kubernetes clusters. It is a minimal Helm chart that deploys a basic APACHE and NGINX web server.
+This Helm chart deploys the **SampleApp** suite into a Kubernetes cluster. It supports multi-environment configurations (`dev`, `stage`, `prod`) and includes subcharts for individual sample services such as `app1`, `app2`. The chart is designed with flexibility in mind, supporting features like HPA, PDB, CronJobs, ingress management, and more.
+
 
 ## 🧰 Prerequisites
 
@@ -15,7 +16,6 @@ Clone the repository and switch to the `test` branch:
 ```bash
 git clone -b test https://github.com/pranavdhopey/Sample-Helm-Chart.git
 cd Sample-Helm-Chart/SampleApp
-helm install sampleapp -f dev-values.yaml .
 ```
 
 ## 📦 Chart Structure
@@ -54,11 +54,31 @@ SampleApp/
 ├── dev-values.yaml
 ├── prod-values.yaml
 └── stage-values.yaml
-
 ```
 
-## 🧪 Testing
-To test the chart's rendering without installing:
+## 🧪 Testing for an Environment
+You can install the chart for a specific environment using the corresponding values file:
+
 ```bash
-helm template sampleapp -f dev-values.yaml .
+helm install sampleapp ./ -f dev-values.yaml --namespace dev --create-namespace
+```
+
+Or for staging:
+
+```bash
+helm install sampleapp ./ -f stage-values.yaml --namespace staging --create-namespace
+```
+
+For production:
+
+```bash
+helm install sampleapp ./ -f prod-values.yaml --namespace prod --create-namespace
+```
+
+
+## 🔄 Uninstall
+To uninstall the chart and release:
+
+```bash
+helm uninstall sampleapp
 ```
