@@ -301,6 +301,7 @@ internal_ingress:
   className: ""
   annotations: 
     kubernetes.io/ingress.class: gce-internal
+    # kubernetes.io/ingress.regional-static-ip-name: "my-static-address"
   hosts:
     - host: app1.goinit.net
       http:
