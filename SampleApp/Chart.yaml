@@ -27,8 +27,8 @@ dependencies:
 - name: sample-app1
   repository: "file://charts/app1"
   version: 0.1.0 
-  condition: app1.enabled
+  condition: sample-app1.enabled
 - name: sample-app2
   repository: "file://charts/app2" 
-  condition: app2.enabled
+  condition: sample-app2.enabled
   version: 0.1.0

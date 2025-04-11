@@ -271,6 +271,7 @@ ingress:
     kubernetes.io/ingress.allow-http: 'true'
     networking.gke.io/managed-certificates: "sampleapp1-certificate,sampleapp2-certificate" 
     networking.gke.io/v1beta1.FrontendConfig: "sampleapp-frontend-config"
+    # kubernetes.io/ingress.global-static-ip-name: "my-static-address"
   hosts:
     - host: app1-dev.goinit.net
       http:
