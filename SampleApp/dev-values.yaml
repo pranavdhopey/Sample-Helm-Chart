@@ -10,6 +10,8 @@ secretstore:
 externalsecret:
   enabled: true
   name: sampleapp-external-secret
+  labels: {}
+  annotations: {}
   refreshInterval: "1m"
   secretStoreRef:
     name: sampleapp-secret-store
