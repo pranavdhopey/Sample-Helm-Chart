@@ -132,10 +132,13 @@ sample-app1:
   env: []
     # - name: HOST_DNS
     #   value: http://app1.goinit.net/ 
-  envFromSecrets: []
-    # - name: DB_USERNAME
-    #   secretName: k8s-secret
-    #   secretKey: DB_USERNAME
+  envFromSecrets:
+    - name: DB_USERNAME
+      secretName: sampleapp-k8s-secret
+      secretKey: DB_USERNAME
+    - name: DB_PASSWORD
+      secretName: sampleapp-k8s-secret
+      secretKey: DB_PASSWORD  
 
 sample-app2:
   enabled: true  
@@ -243,7 +246,7 @@ sample-app2:
 serviceAccount:
   create: true
   annotations: {}
-    # iam.gke.io/gcp-service-account: umesh-sa@umesh-ai.iam.gserviceaccount.com	
+    iam.gke.io/gcp-service-account: external-sa@umesh-ai.iam.gserviceaccount.com
   labels:
     app: sampleapp
   name: "sampleapp"
