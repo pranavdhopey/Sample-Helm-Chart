@@ -245,7 +245,7 @@ sample-app2:
 
 serviceAccount:
   create: true
-  annotations: {}
+  annotations:
     iam.gke.io/gcp-service-account: external-sa@umesh-ai.iam.gserviceaccount.com
   labels:
     app: sampleapp
