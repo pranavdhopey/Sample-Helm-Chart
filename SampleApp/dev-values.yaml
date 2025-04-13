@@ -7,7 +7,7 @@ secretstore:
     name: sampleapp
   projectID: umesh-ai
 
-externalSecret:
+externalsecret:
   enabled: true
   name: sampleapp-external-secret
   refreshInterval: "1m"
