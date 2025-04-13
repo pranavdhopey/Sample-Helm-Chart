@@ -1,3 +1,37 @@
+secretstore:
+  enabled: true
+  name: sampleapp-secret-store
+  clusterLocation: asia-south1-a
+  clusterName: pranav-cluster
+  serviceAccountRef:
+    name: sampleapp
+  projectID: umesh-ai
+
+externalSecret:
+  enabled: true
+  name: sampleapp-external-secret
+  refreshInterval: "1m"
+  secretStoreRef:
+    name: sampleapp-secret-store
+    kind: SecretStore
+  target:
+    name: sampleapp-k8s-secret
+    creationPolicy: Owner
+    deletionPolicy: Retain
+  data:
+    - secretKey: DB_USERNAME
+      remoteRef:
+        key: external-secret
+        version: latest
+        property: DB_USERNAME
+        decodingStrategy: None  # None, Base64, Base64URL, Auto
+    - secretKey: DB_PASSWORD
+      remoteRef:
+        key: external-secret
+        version: latest
+        property: DB_PASSWORD
+        decodingStrategy: None  # None, Base64, Base64URL, Auto    
+
 sample-app1:
   enabled: true   
   app:
@@ -293,7 +327,6 @@ ingress:
                 name: sample-app2-service
                 port: 
                   number: 80
-
 
 internal_ingress:
   enabled: false
