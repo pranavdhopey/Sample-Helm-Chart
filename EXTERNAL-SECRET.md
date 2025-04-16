@@ -33,6 +33,16 @@ helm repo update
 helm install external-secret external-secrets/external-secrets -n external-secret --create-namespace
 ```
 
+3. Grant the Kubernetes service account the iam.workloadIdentityUser role on the GCP service account:
+
+```
+gcloud iam service-accounts add-iam-policy-binding \
+  ${GCP_SA}@${PROJECT_ID}.iam.gserviceaccount.com \
+  --role="roles/iam.workloadIdentityUser" \
+  --member "serviceAccount:${PROJECT_ID}.svc.id.goog[${K8S_NAMESPACE}/${K8S_SA}]"
+```
+
+
 ## 📘 Example values.yaml
 
 For GCP ClusterSecretStore
@@ -53,7 +63,7 @@ clustersecretstore:
       projectID: <gcp-project-id>
 ```
 
-For GCP SecretStore
+Or for GCP SecretStore
 
 ```
 secretstore:
@@ -81,7 +91,7 @@ externalsecret:
   annotations: {}
   secretStoreRef:
     name: gcp-secret-store
-    kind: SecretStore
+    kind: SecretStore       # Or ClusterSecretStore
   refreshInterval: "1m"
   target:
     name: k8s-secret
@@ -94,5 +104,9 @@ externalsecret:
         version: v1
         property: DB_USERNAME
         decodingStrategy: None
-
 ```
+
+
+## 📚 Reference Links
+
+🌐 [Integration with Google Cloud Secret Manager (Official)](https://external-secrets.io/latest/provider/google-secrets-manager/)

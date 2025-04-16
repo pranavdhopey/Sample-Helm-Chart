@@ -1,3 +1,156 @@
+secretstore:
+  enabled: true
+  name: sampleapp-secret-store
+  clusterLocation: asia-south1-a
+  clusterName: pranav-cluster
+  serviceAccountRef:
+    name: sampleapp
+  projectID: umesh-ai
+
+externalsecret:
+  enabled: true
+  name: sampleapp-external-secret
+  labels: {}
+  annotations: {}
+  refreshInterval: "1m"
+  secretStoreRef:
+    name: sampleapp-secret-store
+    kind: SecretStore
+  target:
+    name: sampleapp-k8s-secret
+    creationPolicy: Owner
+    deletionPolicy: Retain
+  data:
+    - secretKey: DB_USERNAME
+      remoteRef:
+        key: external-secret
+        version: latest
+        property: DB_USERNAME
+        decodingStrategy: None  # None, Base64, Base64URL, Auto
+    - secretKey: DB_PASSWORD
+      remoteRef:
+        key: external-secret
+        version: latest
+        property: DB_PASSWORD
+        decodingStrategy: None  # None, Base64, Base64URL, Auto 
+        
+serviceAccount:
+  create: true
+  annotations: {}
+    # iam.gke.io/gcp-service-account: umesh-sa@umesh-ai.iam.gserviceaccount.com	
+  labels:
+    app: sampleapp
+  name: "sampleapp"
+
+jobs:
+  - name: test-cronjob
+    enabled: true
+    failedJobsHistoryLimit: 1
+    successfulJobsHistoryLimit: 5
+    concurrencyPolicy: Allow
+    restartPolicy: OnFailure
+    serviceAccount: sampleapp 
+    schedule: "0 * * * *"
+    timeZone: ""
+    suspend: false
+    image:
+      repository: alpine
+      tag: latest
+      imagePullPolicy: IfNotPresent
+    labels:
+      app: cron
+      env: stage
+    podSecurityContext:
+      runAsNonRoot: true  # Ensures the container runs as a non-root user
+      runAsUser: 1000
+      seccompProfile:
+        type: RuntimeDefault  # Enforces the default seccomp profile for better security
+    securityContext:
+      allowPrivilegeEscalation: false  # Ensures no privilege escalation
+      capabilities:
+        drop:
+          - "ALL"  # Drop all Linux capabilities to comply with the restricted policy
+    env: 
+    command: ["/bin/sh", "-c"]
+    args:
+      - echo "hello"
+
+managedCertificateEnabled: true
+managedCertificate:
+  - name: sampleapp1-certificate
+    domains: 
+    - app1-stage.goinit.net
+  - name: sampleapp2-certificate
+    domains: 
+    - app2-stage.goinit.net  
+
+frontendConfigEnabled: true
+frontendConfig:
+  name: sampleapp-frontend-config
+  redirectToHttps:
+    enabled: true
+    responseCodeName: MOVED_PERMANENTLY_DEFAULT
+  # sslPolicy: gke-ingress-ssl-policy
+
+ingress:
+  enabled: true
+  name: sampleapp-ingress
+  className: ""
+  annotations: 
+    kubernetes.io/ingress.class: gce
+    kubernetes.io/ingress.allow-http: 'true'
+    networking.gke.io/managed-certificates: "sampleapp1-certificate,sampleapp2-certificate" 
+    networking.gke.io/v1beta1.FrontendConfig: "sampleapp-frontend-config"
+  hosts:
+    - host: app1-stage.goinit.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: sample-app1-service
+                port:
+                  number: 80
+    - host: app2-stage.goinit.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: sample-app2-service
+                port: 
+                  number: 80
+
+internal_ingress:
+  enabled: false
+  name: sampleapp-internal-ingress
+  className: ""
+  annotations: 
+    kubernetes.io/ingress.class: gce-internal
+  hosts:
+    - host: app1.goinit.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: sample-app1-service
+                port:
+                  number: 80
+    - host: app2.goinit.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: sample-app2-service
+                port: 
+                  number: 80
+
 sample-app1:
   enabled: true   
   app:
@@ -204,120 +357,3 @@ sample-app2:
     #   secretName: k8s-secret
     #   secretKey: DB_USERNAME
 
-serviceAccount:
-  create: true
-  annotations: {}
-    # iam.gke.io/gcp-service-account: umesh-sa@umesh-ai.iam.gserviceaccount.com	
-  labels:
-    app: sampleapp
-  name: "sampleapp"
-
-jobs:
-  - name: test-cronjob
-    enabled: true
-    failedJobsHistoryLimit: 1
-    successfulJobsHistoryLimit: 5
-    concurrencyPolicy: Allow
-    restartPolicy: OnFailure
-    serviceAccount: sampleapp 
-    schedule: "0 * * * *"
-    timeZone: ""
-    suspend: false
-    image:
-      repository: alpine
-      tag: latest
-      imagePullPolicy: IfNotPresent
-    labels:
-      app: cron
-      env: stage
-    podSecurityContext:
-      runAsNonRoot: true  # Ensures the container runs as a non-root user
-      runAsUser: 1000
-      seccompProfile:
-        type: RuntimeDefault  # Enforces the default seccomp profile for better security
-    securityContext:
-      allowPrivilegeEscalation: false  # Ensures no privilege escalation
-      capabilities:
-        drop:
-          - "ALL"  # Drop all Linux capabilities to comply with the restricted policy
-    env: 
-    command: ["/bin/sh", "-c"]
-    args:
-      - echo "hello"
-
-managedCertificateEnabled: true
-managedCertificate:
-  - name: sampleapp1-certificate
-    domains: 
-    - app1-stage.goinit.net
-  - name: sampleapp2-certificate
-    domains: 
-    - app2-stage.goinit.net  
-
-frontendConfigEnabled: true
-frontendConfig:
-  name: sampleapp-frontend-config
-  redirectToHttps:
-    enabled: true
-    responseCodeName: MOVED_PERMANENTLY_DEFAULT
-  # sslPolicy: gke-ingress-ssl-policy
-
-ingress:
-  enabled: true
-  name: sampleapp-ingress
-  className: ""
-  annotations: 
-    kubernetes.io/ingress.class: gce
-    kubernetes.io/ingress.allow-http: 'true'
-    networking.gke.io/managed-certificates: "sampleapp1-certificate,sampleapp2-certificate" 
-    networking.gke.io/v1beta1.FrontendConfig: "sampleapp-frontend-config"
-  hosts:
-    - host: app1-stage.goinit.net
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: sample-app1-service
-                port:
-                  number: 80
-    - host: app2-stage.goinit.net
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: sample-app2-service
-                port: 
-                  number: 80
-
-
-internal_ingress:
-  enabled: false
-  name: sampleapp-internal-ingress
-  className: ""
-  annotations: 
-    kubernetes.io/ingress.class: gce-internal
-  hosts:
-    - host: app1.goinit.net
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: sample-app1-service
-                port:
-                  number: 80
-    - host: app2.goinit.net
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: sample-app2-service
-                port: 
-                  number: 80
