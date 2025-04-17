@@ -35,6 +35,7 @@ helm install external-secret external-secrets/external-secrets -n external-secre
 
 3. First, create the Kubernetes service account with an annotation that references the GCP service account:
 
+```
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -42,7 +43,7 @@ metadata:
   namespace: <namepsace>
   annotations:
     iam.gke.io/gcp-service-account: [GCP_SA]@[PROJECT_ID].iam.gserviceaccount.com
-
+```
 
 4. Grant the Kubernetes service account the iam.workloadIdentityUser role on the GCP service account:
 
